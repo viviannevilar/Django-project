@@ -1,0 +1,65 @@
+
+started from hayley's template at github
+
+got to shecodes folder, and used
+
+
+$ git clone https://github.com/viviannevilar/Django-project.git
+
+$ cd Django-project
+
+$ virtualenv venv
+
+$ ls
+
+$ . venv/bin/activate
+
+$ pip3 install -r requirements.txt
+
+# navigate to project level
+$ cd she_codes_news 
+
+$ python3 manage.py makemigrations
+
+$ python3 manage.py migrate
+
+$ python3 manage.py runserver
+
+in VSCode
+
+open settings.py file and add this to installed apps
+'news.apps.NewsConfig'
+
+migrate now because we told the project about the news app
+
+$ python3 manage.py makemigrations
+
+$ python3 manage.py migrate
+
+#vscode, in she_codes_news/urls.py add this to urlpatterns
+
+    path('news/', include('news.urls')),
+
+#and add the import
+
+from django.urls import path, include
+
+#kill the server again and use
+
+$ python3 manage.py loaddata news
+
+#this loads the data from a json file into the database
+
+$ python3 manage.py runserver
+
+# in vscode go to news/fixtures/news.json
+
+#vscode she_codes_news settings.py, find TEMPLATES, this is what we changed
+
+
+'DIRS': [(os.path.join(BASE_DIR, 'templates')),],
+
+#and to the end of the file
+STATICFILES_DIRS (
+    os.path.join(BASE_DIR, 'static')
+)
