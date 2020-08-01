@@ -14,5 +14,10 @@ class StoryForm(ModelForm):
                     'placeholder': 'Select a date',
                     'type': 'date'
                 }
+            ),
+            'title': forms.TextInput(
+                attrs = {
+                    'class': 'form-title'
+                }
             )
         }
