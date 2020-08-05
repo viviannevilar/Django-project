@@ -22,10 +22,14 @@ $ . venv/bin/activate.fish
 
 $ pip3 install -r requirements.txt
 
+
+#if you need to upgrade some packages, use the following
 $ pip install -U -r requirements.txt
 
+#I used the above when I added some pylint stuff to my
+#requirements.txt file. I had the venv activated!
 #see the requirements.txt in Django-tutorial for pylint stuff
-
+#https://stackoverflow.com/questions/115977/using-pylint-with-django
 
 
 
@@ -80,3 +84,36 @@ $ python3 manage.py runserver
 STATICFILES_DIRS (
     os.path.join(BASE_DIR, 'static')
 )
+
+
+superuser viviannevilar testing321
+
+
+# if you change the json file, then you need to makemigrations,
+  migrate, then loaddata dataname
+
+
+
+
+#add new app
+
+python3 manage.py startapp users
+
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+#need to change stuff in admin.py, also models.py
+
+
+
+#to save the data from the database into a json file, so you can
+delete the database
+python3 manage.py dumdata news > news.json
+
+#remove database
+rm db.sqlite3
+
+python3 manage.py migrate
+
+python3 manage.py createsuperuser
+

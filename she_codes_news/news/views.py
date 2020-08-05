@@ -2,6 +2,8 @@ from django.views import generic
 from django.urls import reverse_lazy
 from .models import NewsStory
 from .forms import StoryForm
+from users.models import CustomUser
+from django.shortcuts import get_object_or_404
 
 class AddStoryView(generic.CreateView):
     form_class = StoryForm
@@ -9,12 +11,19 @@ class AddStoryView(generic.CreateView):
     template_name = 'news/createStory.html'
     success_url = reverse_lazy('news:index')
 
+    def form_valid(self,form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 class IndexView(generic.ListView):
     template_name = 'news/index.html'
+    model = NewsStory
 
-    def get_queryset(self):
-        '''Return all news stories.'''
-        return NewsStory.objects.all()
+    #the way below was what was originally in the file. 
+    # I substituted them by the line model = NewsStory
+    # def get_queryset(self):
+    #     '''Return all news stories.'''
+    #     return NewsStory.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -27,3 +36,15 @@ class StoryView(generic.DetailView):
     model = NewsStory
     template_name = 'news/story.html'
     context_object_name = 'story'
+
+
+# class UserStoriesView(generic.ListView):
+#     model = NewsStory
+#     template_name = 'news/userStories.html' 
+#     context_object_name = 'stories'
+#     #paginate_by = 5
+
+#     def get_queryset(self):
+#         user = get_object_or_404(User, username=self.kwargs.get('username'))
+#         return NewsStory.objects.filter(author=user).order_by('-pub_date')
+
