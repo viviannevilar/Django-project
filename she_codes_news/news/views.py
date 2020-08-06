@@ -4,8 +4,11 @@ from .models import NewsStory
 from .forms import StoryForm
 from users.models import CustomUser
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class AddStoryView(generic.CreateView):
+
+
+class AddStoryView(LoginRequiredMixin,generic.CreateView):
     form_class = StoryForm
     context_object_name = 'storyForm'
     template_name = 'news/createStory.html'
@@ -14,6 +17,7 @@ class AddStoryView(generic.CreateView):
     def form_valid(self,form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+    
 
 class IndexView(generic.ListView):
     template_name = 'news/index.html'
@@ -48,3 +52,13 @@ class UserStoriesView(generic.ListView):
         user = get_object_or_404(CustomUser, username=self.kwargs.get('username'))
         return NewsStory.objects.filter(author=user).order_by('-pub_date')
 
+
+# class MyStoriesView(LoginRequiredMixin, generic.ListView):
+#     model = NewsStory
+#     template_name = 'news/myStories.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         user = CustomUser.objects.filter(username=self.request.user).first()
+#         context['my_stories'] =  user.post_set.all() 
+#         return context
