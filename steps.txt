@@ -98,7 +98,7 @@ superuser viviannevilar testing321
 #add new app
 
 python3 manage.py startapp users
-
+                                                                                                                              
 
 AUTH_USER_MODEL = 'users.CustomUser'
 

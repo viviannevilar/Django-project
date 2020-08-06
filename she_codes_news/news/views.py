@@ -38,13 +38,13 @@ class StoryView(generic.DetailView):
     context_object_name = 'story'
 
 
-# class UserStoriesView(generic.ListView):
-#     model = NewsStory
-#     template_name = 'news/userStories.html' 
-#     context_object_name = 'stories'
-#     #paginate_by = 5
+class UserStoriesView(generic.ListView):
+    model = NewsStory
+    template_name = 'news/userStories.html' 
+    context_object_name = 'stories'
+    #paginate_by = 5
 
-#     def get_queryset(self):
-#         user = get_object_or_404(User, username=self.kwargs.get('username'))
-#         return NewsStory.objects.filter(author=user).order_by('-pub_date')
+    def get_queryset(self):
+        user = get_object_or_404(CustomUser, username=self.kwargs.get('username'))
+        return NewsStory.objects.filter(author=user).order_by('-pub_date')
 
