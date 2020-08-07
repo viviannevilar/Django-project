@@ -7,9 +7,25 @@
 
 {% block content %}
 
+{% if user.is_authenticated and user.username == person.username %}
+    <a href="{% url 'users:updateaccount' person.username %}">Edit Account</a>
+{% endif %}
+
 <div id="story-wrapper">
-    <h2>{{ user.username }}'s Profile</h2>
-    <a href="{% url 'news:userstories' user.username %}">Stories</a>
+    <h2>{{ person.username }}'s Profile</h2>
+    <a href="{% url 'news:userstories' person.username %}">Stories</a>
 </div>
+
+
+
+
+    {% comment %} {% if stories %}
+        {% for story in stories %}
+            {{ story.title }}
+        {% endfor %}
+    {% else %}
+        <p>No stories are available.</p>
+    {% endif %} {% endcomment %}
+
 
 {% endblock %}

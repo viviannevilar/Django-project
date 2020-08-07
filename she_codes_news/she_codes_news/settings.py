@@ -131,3 +131,6 @@ STATICFILES_DIRS = (
 
 LOGIN_REDIRECT_URL = 'news:index'
 LOGOUT_REDIRECT_URL = 'news:index'
+
+
+LOGIN_URL = 'login'
