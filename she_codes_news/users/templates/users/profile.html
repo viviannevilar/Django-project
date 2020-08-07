@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'news/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div id="story-wrapper">
+    <h2>{{ user.username }}'s Profile</h2>
+    <a href="{% url 'news:userstories' user.username %}">Stories</a>
+</div>
+
+{% endblock %}

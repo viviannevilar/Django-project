@@ -98,7 +98,7 @@ superuser viviannevilar testing321
 #add new app
 
 python3 manage.py startapp users
-                                                                                                                              
+
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
@@ -116,4 +116,89 @@ rm db.sqlite3
 python3 manage.py migrate
 
 python3 manage.py createsuperuser
+
+
+# In the shell, this works
+
+
+################################################################
+Two ways to have the detail view.
+################################################################
+
+##############################
+1. If you want it to have the defaul id in the url name, like
+
+http://localhost:8000/users/profile/2/
+
+Then in the template calling this, you need to have something like:
+
+<a href="{% url 'users:profile' story.author.pk %}">{{ story.author }}</a>
+
+Then in urls.py
+
+path('profile/<int:pk>/', UserView.as_view(), name='profile'),
+
+views.py
+
+class UserView(generic.DetailView):
+    model = CustomUser
+    template_name = 'users/profile.html'
+    context_object_name = 'user'
+
+##############################
+2. To have the username in the url name, like
+
+http://localhost:8000/users/profile/newuser/
+
+Then in the template calling you need
+
+<a href="{% url 'users:profile' story.author.username %}">{{ story.author }}</a>
+
+and in urls.py
+
+path('profile/<str:slug>/', UserView.as_view(), name='profile'),   
+
+and in views.py
+
+class UserView(generic.DetailView):
+    model = CustomUser
+    template_name = 'users/profile.html'
+    context_object_name = 'user'
+
+    def get_slug_field(self):
+        return 'username'
+
+
+
+################################################################
+Link to take to stories by the author, or to take to profile
+################################################################
+
+The context name for this template is "story" (this is a detailview of a story)
+
+##############################
+1. To take to the stories by author:
+
+<a href="{% url 'news:userstories' story.author.username %}">{{ story.author }}</a>
+
+##############################
+2. To take to the author's profile
+
+<a href="{% url 'users:profile' story.author.username %}">{{ story.author }}</a>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
