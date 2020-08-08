@@ -9,6 +9,7 @@ urlpatterns = [
     path('<int:pk>/update/', views.UpdateStoryView.as_view(), name='update-story'),    
     path('add-story/', views.AddStoryView.as_view(), name='newsStory'),
     path('stories/<str:username>/', views.UserStoriesView.as_view(), name='userstories'),
+    path('stories/category/<str:slug>/', views.CategoryStoriesView.as_view(), name='cat-stories'),
     # path('stories/mine/', views.MyStoriesView.as_view(), name='mystories'),    
 ]
 

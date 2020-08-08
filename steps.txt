@@ -238,3 +238,18 @@ Examples
 <QuerySet [<NewsStory: NewsStory object (2)>]>
 
 
+
+
+
+
+
+from news.models import NewsStory
+>>> NewsStory.objects.filter(category = "1-uncategorised")
+Traceback (most recent call last):
+  File "/Users/viviannevilar/SheCodes/Django-project/venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py", line 1772, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '1-uncategorised'
+
+>>> NewsStory.objects.filter(category = 1)
+<QuerySet [<NewsStory: NewsStory object (1)>]>
+>>> 

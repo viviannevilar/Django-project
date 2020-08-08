@@ -9,7 +9,10 @@
 
 <div id="story-wrapper">
     <h2>{{ story.title }}</h2>
+    {% comment %} <h4>{{ story.category.name }}</h4> {% endcomment %}
 
+    <h4><a href="{% url 'news:cat-stories' story.category.name %}">{{ story.category.name }}</a></h4>
+    
     {% comment %} {% if user.is_authenticated and user.username == person.username %} {% endcomment %}
     {% if user.is_authenticated and story.author == user %}
         <a href="{% url 'news:update-story' story.id %}">Edit Story</a>

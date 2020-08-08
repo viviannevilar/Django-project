@@ -1,6 +1,6 @@
 from django.views import generic
 from django.urls import reverse_lazy
-from .models import NewsStory
+from .models import NewsStory, Category
 from .forms import StoryForm
 from users.models import CustomUser
 from django.shortcuts import get_object_or_404
@@ -55,7 +55,6 @@ class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateVie
             return True
         return False
 
-
 class UserStoriesView(generic.ListView):
     model = NewsStory
     template_name = 'news/userStories.html' 
@@ -65,6 +64,25 @@ class UserStoriesView(generic.ListView):
     def get_queryset(self):
         user = get_object_or_404(CustomUser, username=self.kwargs.get('username'))
         return NewsStory.objects.filter(author=user).order_by('-pub_date')
+
+class CategoryStoriesView(generic.DetailView):
+    model = Category
+    template_name = 'news/categoryStories.html' 
+    context_object_name = 'category'
+    #paginate_by = 5
+
+    def get_slug_field(self):
+        return 'name'
+
+    # def get_queryset(self):
+    #     #myquery = super().get_queryset()
+    #     return NewsStory.objects.filter(category = self.kwargs.get('id')) 
+        
+        #if I used self.kwarg['category'] then it would return 1-uncategorised instead of
+        # the 1 which is what the field category in NewsStory model expects. It expects the 
+        #foreign key
+
+
 
 
 # class MyStoriesView(LoginRequiredMixin, generic.ListView):

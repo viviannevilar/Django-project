@@ -25,7 +25,11 @@ class NewsStory(models.Model):
         on_delete=models.CASCADE,
         related_name='published_stories'
     )
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL,null=True)
+    category = models.ForeignKey(
+        Category, 
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name = 'cat_stories')
 
     #def date_published(self):
     #    return self.pub_date.strftime('%B %d %Y')
