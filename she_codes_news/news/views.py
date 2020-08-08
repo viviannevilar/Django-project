@@ -41,6 +41,24 @@ class StoryView(generic.DetailView):
     template_name = 'news/story.html'
     context_object_name = 'story'
 
+class UpdateStoryView(generic.UpdateView): #LoginRequiredMixin, UserPassesTestMixin, 
+    model = NewsStory
+    success_url = reverse_lazy('news:index')
+    fields = ["title","content"]
+    template_name = "news/updateStory.html"
+
+    # def get_slug_field(self):
+    #     return 'username'
+
+    # def test_func(self):
+    #     #user = self.get_object()
+    #     if self.request.user.username == self.kwargs['slug']: #post.author:
+    #         return True
+    #     return False
+
+
+
+
 
 class UserStoriesView(generic.ListView):
     model = NewsStory

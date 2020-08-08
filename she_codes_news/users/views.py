@@ -21,21 +21,10 @@ class UserView(generic.DetailView):
     def get_slug_field(self):
         return 'username'
 
-    def get_context_data(self, **kwargs):
-        context = super(UserView, self).get_context_data(**kwargs)
-        context['stories'] = NewsStory.objects.filter(author=self.kwargs.get('username')).order_by('-pub_date')
-        #context['stories'] = NewsStory.objects.filter(author=self.kwargs.get('pk')).order_by('-pub_date')
-        return context
-
-    # def get_queryset(self):
-    #     user = get_object_or_404(CustomUser, username=self.kwargs.get('username'))
-    #     return NewsStory.objects.filter(author=user).order_by('-pub_date')
-
-
 class UpdateAccountView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = CustomUser
     success_url = reverse_lazy('news:index')
-    fields = ["pic"]
+    fields = ["pic","bio"]
     template_name = 'users/updateAccount.html'
 
     def get_slug_field(self):

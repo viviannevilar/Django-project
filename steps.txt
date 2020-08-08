@@ -188,17 +188,53 @@ The context name for this template is "story" (this is a detailview of a story)
 
 
 
+################################################################
+Model, give new name to be able to find it in related model
+################################################################
+
+
+class NewsStory(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='published_stories'     #this line!!
+    )
+
+
+Then in the users model, instead of searching for
+
+user.newstory_set.all()
+
+can search for
+
+.published_stories.all()
+
+
+Examples
+
+- using default name:
+
+ ./manage.py shell
+
+>>> from django.contrib.auth import get_user_model
+>>> User = get_user_model()
+>>> User.objects.first()
+<CustomUser: viviannevilar>
+>>> u = User.objects.first()
+>>> dir(u)
+>>> u.__dict__
+>>> u.newsstory_set.all()  #will give all stories by this user
 
 
 
+- using new name:
 
 
-
-
-
-
-
-
-
+>>> from django.contrib.auth import get_user_model
+>>> User = get_user_model()
+>>> myuser = User.objects.get(pk=2)
+>>> myuser.published_stories.all()
+<QuerySet [<NewsStory: NewsStory object (2)>]>
 
 

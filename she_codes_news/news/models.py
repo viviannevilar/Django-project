@@ -12,6 +12,7 @@ class NewsStory(models.Model):
     author = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
+        related_name='published_stories'
     )
 
     #def date_published(self):

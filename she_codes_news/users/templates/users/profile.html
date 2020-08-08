@@ -13,19 +13,29 @@
 
 <div id="story-wrapper">
     <h2>{{ person.username }}'s Profile</h2>
-    <a href="{% url 'news:userstories' person.username %}">Stories</a>
+    <a href="{% url 'news:userstories' person.username %}">All Stories</a>
 </div>
 
+<div>
+    <div>
+        <img src="{{ person.pic }}">
+    </div>
 
+    <div>
+        {{ person.bio }}
+    </div>
+</div>
 
-
-    {% if stories %}
-        {% for story in stories %}
-            {{ story.title }}
+<ul>
+    {% if person.published_stories.all %}
+        {% for story in person.published_stories.all %}
+        <li>
+            <a href="{% url 'news:story' story.id %}">{{ story.title }}</a>
+        </li>
         {% endfor %}
     {% else %}
         <p>No stories are available.</p>
     {% endif %}
-
+</ul>
 
 {% endblock %}
