@@ -18,7 +18,7 @@ class StoryForm(ModelForm):
         model = NewsStory
         #fields = "__all__" 
         #fields = ['title', 'author', 'pub_date', 'content', 'image']        
-        fields = ['title', 'pub_date', 'content', 'image']     
+        fields = ['title', 'pub_date', 'content', 'image','category']     
         #exclude = ['title'] #yet another way to set the fields, by excluding some         
         widgets = {
             'pub_date': forms.DateInput(
