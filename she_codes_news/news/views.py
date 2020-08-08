@@ -5,7 +5,7 @@ from .forms import StoryForm
 from users.models import CustomUser
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 class AddStoryView(LoginRequiredMixin,generic.CreateView):
@@ -41,7 +41,7 @@ class StoryView(generic.DetailView):
     template_name = 'news/story.html'
     context_object_name = 'story'
 
-class UpdateStoryView(generic.UpdateView): #LoginRequiredMixin, UserPassesTestMixin, 
+class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView): #LoginRequiredMixin, UserPassesTestMixin, 
     model = NewsStory
     success_url = reverse_lazy('news:index')
     fields = ["title","content"]
@@ -50,14 +50,11 @@ class UpdateStoryView(generic.UpdateView): #LoginRequiredMixin, UserPassesTestMi
     # def get_slug_field(self):
     #     return 'username'
 
-    # def test_func(self):
-    #     #user = self.get_object()
-    #     if self.request.user.username == self.kwargs['slug']: #post.author:
-    #         return True
-    #     return False
-
-
-
+    def test_func(self):
+        story = self.get_object()
+        if self.request.user == story.author: #post.author:
+            return True
+        return False
 
 
 class UserStoriesView(generic.ListView):
