@@ -19,13 +19,13 @@
 
 
 
-    {% comment %} {% if stories %}
+    {% if stories %}
         {% for story in stories %}
             {{ story.title }}
         {% endfor %}
     {% else %}
         <p>No stories are available.</p>
-    {% endif %} {% endcomment %}
+    {% endif %}
 
 
 {% endblock %}
