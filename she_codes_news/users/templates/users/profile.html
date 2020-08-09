@@ -44,6 +44,8 @@ Stories by {{ person.username }}
     {% endif %}
 </ul>
 
+
+{% if user.is_authenticated and user.username == person.username %}
 Favourited
 <ul>
     {% if favourited %}
@@ -57,7 +59,7 @@ Favourited
         <p>No stories are available.</p>
     {% endif %}
 </ul>
-
+{% endif %}
 
 
 {% endblock %}
