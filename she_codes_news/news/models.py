@@ -12,11 +12,15 @@ class Category(models.Model):
     def __str__(self):
         return str(self.id) + "-" + self.name
 
+# STATUS = (
+#     (0,"Draft"),
+#     (1,"Publish")
+# )
 
 class NewsStory(models.Model):
     title = models.CharField(max_length=200)
-    pub_date = models.DateTimeField()#auto_now_add=True
-    edited = models.DateTimeField(auto_now=True,null=True)
+    pub_date = models.DateTimeField(null=True)#auto_now_add=True)#
+    edited = models.DateTimeField(auto_now=True,blank=True,null=True)
     content = models.TextField()
     image = models.URLField(default='https://i.imgur.com/odto5AG.jpg', blank=True, max_length=200)
     author = models.ForeignKey(
@@ -28,6 +32,8 @@ class NewsStory(models.Model):
         Category, 
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
+        default=None,
         related_name = 'cat_stories'
         )
     favourites = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='favourites')

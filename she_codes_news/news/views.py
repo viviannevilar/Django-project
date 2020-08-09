@@ -19,6 +19,9 @@ class AddStoryView(LoginRequiredMixin,generic.CreateView):
         return super().form_valid(form)
     
 
+
+
+
 class IndexView(generic.ListView):
     template_name = 'news/index.html'
     model = NewsStory
@@ -82,7 +85,7 @@ def FavouriteView(request,pk):
 #     return HttpResponseRedirect(post.get_absolute_url())
 
 
-class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView): #LoginRequiredMixin, UserPassesTestMixin, 
+class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView): 
     model = NewsStory
     success_url = reverse_lazy('news:index')
     fields = ["title","content"]
@@ -90,6 +93,10 @@ class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateVie
 
     # def get_slug_field(self):
     #     return 'username'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
     def test_func(self):
         story = self.get_object()

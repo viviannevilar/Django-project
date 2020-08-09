@@ -24,11 +24,12 @@
     </form>
     </div>
    
+    {% if story.category %}
+        <h4><a href="{% url 'news:cat-stories' story.category.name %}">{{ story.category.name }}</a></h4>
+    {% else %}
+        <h4>Uncategorised</h4>
+    {% endif %}
 
-    {% comment %} <i class="fas fa-star"></i> {% endcomment %}
-
-    <h4><a href="{% url 'news:cat-stories' story.category.name %}">{{ story.category.name }}</a></h4>
-    
     {% if user.is_authenticated and story.author == user %}
         <a href="{% url 'news:update-story' story.id %}">Edit Story</a>
     {% endif %}
