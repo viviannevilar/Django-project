@@ -57,7 +57,6 @@ def FavouriteView(request,pk):
         favourited = True
     return HttpResponseRedirect(reverse('news:story', args=[str(pk),]))
 
-
 class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView): 
     model = NewsStory
     success_url = reverse_lazy('news:index')
@@ -95,14 +94,6 @@ class CategoryStoriesView(generic.DetailView):
 
     def get_slug_field(self):
         return 'name'
-
-    # def get_queryset(self):
-    #     #myquery = super().get_queryset()
-    #     return NewsStory.objects.filter(category = self.kwargs.get('id')) 
-        
-        #if I used self.kwarg['category'] then it would return 1-uncategorised instead of
-        # the 1 which is what the field category in NewsStory model expects. It expects the 
-        #foreign key
 
 class UncategorisedStoriesView(generic.TemplateView):
     model = Category

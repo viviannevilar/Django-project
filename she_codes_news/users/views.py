@@ -16,7 +16,6 @@ class CreateAccountView(CreateView):
 class UserView(generic.DetailView):
     model = CustomUser
     template_name = 'users/profile.html'
-    #context_object_name = 'person'
 
     def get_slug_field(self):
         return 'username'
@@ -32,14 +31,13 @@ class UserView(generic.DetailView):
 class UpdateAccountView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = CustomUser
     success_url = reverse_lazy('news:index')
-    fields = ["pic","bio"]
+    fields = ['first_name', 'last_name', 'pic','bio']
     template_name = 'users/updateAccount.html'
 
     def get_slug_field(self):
         return 'username'
 
     def test_func(self):
-        #user = self.get_object()
         if self.request.user.username == self.kwargs['slug']: #post.author:
             return True
         return False
