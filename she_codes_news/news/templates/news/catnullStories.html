@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'news/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <a href="{% url 'news:newsStory' %}">Write New Story</a>
+    <h2>Uncategorised Stories</h2>
+
+<ul>
+    {% if stories %}
+        {% for story in stories %}
+        <li>
+            <a href="{% url 'news:story' story.id %}">{{ story.title }}</a>
+        </li>
+        {% endfor %}
+    {% else %}
+        <p>No stories are available.</p>
+    {% endif %}
+</ul>
+
+{% endblock %}
+
+ 

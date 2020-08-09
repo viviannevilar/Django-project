@@ -18,19 +18,9 @@ class AddStoryView(LoginRequiredMixin,generic.CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
     
-
-
-
-
 class IndexView(generic.ListView):
     template_name = 'news/index.html'
     model = NewsStory
-
-    #the way below was what was originally in the file. 
-    # I substituted them by the line model = NewsStory
-    # def get_queryset(self):
-    #     '''Return all news stories.'''
-    #     return NewsStory.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,11 +28,9 @@ class IndexView(generic.ListView):
         context['all_stories'] = NewsStory.objects.order_by('-pub_date')
         return context
 
-
 class StoryView(generic.DetailView):
     model = NewsStory
     template_name = 'news/story.html'
-    #context_object_name = 'story'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -58,11 +46,6 @@ class StoryView(generic.DetailView):
         context['favourited'] = favourited 
         return context
 
-#     is_favourite = False
-
-#     if post.favourites.filter(id=request.user.id).exists():
-#         is_favourite = True
-
 def FavouriteView(request,pk):
     post = get_object_or_404(NewsStory, id=request.POST.get('post_fav'))
     favourited = False
@@ -73,16 +56,6 @@ def FavouriteView(request,pk):
         post.favourites.add(request.user)
         favourited = True
     return HttpResponseRedirect(reverse('news:story', args=[str(pk),]))
-
-
-
-# def favourite_post(request, id):
-#     post = get_object_or_404(NewsStory, id=id)
-#     if post.favourites.filter(id=request.user.id).exists():
-#         post.favourites.remove(request.user)
-#     else:
-#         post.favourite.add(request.user)
-#     return HttpResponseRedirect(post.get_absolute_url())
 
 
 class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView): 
@@ -131,15 +104,14 @@ class CategoryStoriesView(generic.DetailView):
         # the 1 which is what the field category in NewsStory model expects. It expects the 
         #foreign key
 
+class UncategorisedStoriesView(generic.TemplateView):
+    model = Category
+    template_name = 'news/catnullStories.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stories = NewsStory.objects.filter(category=None)
+        context['stories'] = stories
+        return context
 
 
-
-# class MyStoriesView(LoginRequiredMixin, generic.ListView):
-#     model = NewsStory
-#     template_name = 'news/myStories.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         user = CustomUser.objects.filter(username=self.request.user).first()
-#         context['my_stories'] =  user.post_set.all() 
-#         return context

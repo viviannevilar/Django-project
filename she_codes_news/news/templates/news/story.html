@@ -27,7 +27,7 @@
     {% if story.category %}
         <h4><a href="{% url 'news:cat-stories' story.category.name %}">{{ story.category.name }}</a></h4>
     {% else %}
-        <h4>Uncategorised</h4>
+        <h4><a href="{% url 'news:uncat-stories' %}">Uncategorised</a></h4>
     {% endif %}
 
     {% if user.is_authenticated and story.author == user %}

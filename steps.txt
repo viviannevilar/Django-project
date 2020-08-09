@@ -253,3 +253,39 @@ ValueError: invalid literal for int() with base 10: '1-uncategorised'
 >>> NewsStory.objects.filter(category = 1)
 <QuerySet [<NewsStory: NewsStory object (1)>]>
 >>> 
+
+
+
+
+
+
+
+>>> from news.models import NewsStory
+>>> from users.models import CustomUser
+>>> stories = NewsStory.objects.filter(favourites=1)
+>>> stories
+<QuerySet [<NewsStory: NewsStory object (1)>, <NewsStory: NewsStory object (4)>]>
+>>> stories = NewsStory.objects.filter(favourites=2)
+>>> stories
+<QuerySet [<NewsStory: NewsStory object (4)>, <NewsStory: NewsStory object (2)>, <NewsStory: NewsStory object (3)>]>
+>>> 
+
+
+
+
+
+################################################################
+Same
+################################################################
+
+The two ways below are equivalent:
+
+#####
+def get_queryset(self):
+     '''Return all news stories.'''
+      return NewsStory.objects.all()
+
+#####
+model = NewsStory
+
+################################################################
