@@ -1,6 +1,4 @@
 from django.db import models
-#from django.contrib.auth import get_user_model
-#from users.models import CustomUser
 from django.conf import settings
 
 class Category(models.Model):
@@ -32,15 +30,11 @@ class NewsStory(models.Model):
         null=True,
         related_name = 'cat_stories'
         )
-    favourites = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='favourites')#, blank=True)
+    favourites = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='favourites')
 
     def fav_count(self):
         return self.favourites.count()
 
-    #def date_published(self):
-    #    return self.pub_date.strftime('%B %d %Y')
 
-# class Tags(models.Model):
-#     name = models.CharField(max_length = 30, unique=True)
 
 

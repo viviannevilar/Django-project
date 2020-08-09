@@ -16,10 +16,20 @@ class CreateAccountView(CreateView):
 class UserView(generic.DetailView):
     model = CustomUser
     template_name = 'users/profile.html'
-    context_object_name = 'person'
+    #context_object_name = 'person'
 
     def get_slug_field(self):
         return 'username'
+   
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        person = CustomUser.objects.filter(username=self.kwargs['slug']).first()
+        posts = NewsStory.objects.filter(favourites=person.id)
+        context['person'] = person
+        context['favourited'] = posts
+        return context
+
+
 
 class UpdateAccountView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = CustomUser

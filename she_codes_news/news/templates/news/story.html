@@ -13,13 +13,17 @@
     <div>
     <form action="{% url 'news:favourite-story' story.pk %}" method="POST">
         {% csrf_token %}
-
-        {% if favourited %}
-            <button type="submit", name="post_fav", value="{{ story.id }}"><i class="fas fa-star"></i></button>
+        {% if user.is_authenticated %}
+            {% if favourited %}
+                <button type="submit", name="post_fav", value="{{ story.id }}"><i class="fas fa-star"></i></button>
+            {% else %}
+                <button type="submit", name="post_fav", value="{{ story.id }}"><i class="far fa-star"></i></button>
+            {% endif %}
         {% else %}
-            <button type="submit", name="post_fav", value="{{ story.id }}"><i class="far fa-star"></i></button>
+                <i class="far fa-star"></i>
+                Login to favourite this story
         {% endif %}
-        
+
         - {{ total_favs }} {{ total_favs|pluralize:"person,people" }} favourited this story
     </form>
     </div>

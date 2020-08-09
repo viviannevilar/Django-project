@@ -31,6 +31,7 @@
     </div>
 </div>
 
+Stories by {{ person.username }}
 <ul>
     {% if person.published_stories.all %}
         {% for story in person.published_stories.all %}
@@ -42,5 +43,21 @@
         <p>No stories are available.</p>
     {% endif %}
 </ul>
+
+Favourited
+<ul>
+    {% if favourited %}
+        {% for fav in favourited %}
+        <li>
+            {% comment %} {{ fav.title }} {% endcomment %}
+            <a href="{% url 'news:story' fav.id %}">{{ fav.title }}</a>
+        </li>
+        {% endfor %}
+    {% else %}
+        <p>No stories are available.</p>
+    {% endif %}
+</ul>
+
+
 
 {% endblock %}
