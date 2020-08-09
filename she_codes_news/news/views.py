@@ -1,10 +1,11 @@
 from django.views import generic
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .models import NewsStory, Category
 from .forms import StoryForm
 from users.models import CustomUser
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponseRedirect
 
 
 class AddStoryView(LoginRequiredMixin,generic.CreateView):
@@ -38,7 +39,48 @@ class IndexView(generic.ListView):
 class StoryView(generic.DetailView):
     model = NewsStory
     template_name = 'news/story.html'
-    context_object_name = 'story'
+    #context_object_name = 'story'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = get_object_or_404(NewsStory, id=self.kwargs['pk'])
+        total_favs = post.fav_count()
+
+        favourited = False
+        if post.favourites.filter(id=self.request.user.id).exists():
+            favourited = True
+
+        context['total_favs'] = total_favs
+        context['story'] = post
+        context['favourited'] = favourited 
+        return context
+
+#     is_favourite = False
+
+#     if post.favourites.filter(id=request.user.id).exists():
+#         is_favourite = True
+
+def FavouriteView(request,pk):
+    post = get_object_or_404(NewsStory, id=request.POST.get('post_fav'))
+    favourited = False
+    if post.favourites.filter(id=request.user.id).exists():
+        post.favourites.remove(request.user)
+        favourited = False
+    else:
+        post.favourites.add(request.user)
+        favourited = True
+    return HttpResponseRedirect(reverse('news:story', args=[str(pk),]))
+
+
+
+# def favourite_post(request, id):
+#     post = get_object_or_404(NewsStory, id=id)
+#     if post.favourites.filter(id=request.user.id).exists():
+#         post.favourites.remove(request.user)
+#     else:
+#         post.favourite.add(request.user)
+#     return HttpResponseRedirect(post.get_absolute_url())
+
 
 class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView): #LoginRequiredMixin, UserPassesTestMixin, 
     model = NewsStory

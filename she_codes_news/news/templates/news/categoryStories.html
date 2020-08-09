@@ -10,15 +10,6 @@
     <a href="{% url 'news:newsStory' %}">Write New Story</a>
     <h2>Stories for category {{ category }}</h2>
 
-    {% comment %} <div id="user-stories">
-        {% if stories %}
-            {% for story in stories %}
-                {% include "./storyCard.html" with story=story %}
-            {% endfor %}
-        {% else %}
-            <p>No stories are available.</p>
-        {% endif %}
-    </div> {% endcomment %}
 <ul>
     {% if category.cat_stories.all %}
         {% for story in category.cat_stories.all %}

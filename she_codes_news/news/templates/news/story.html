@@ -9,11 +9,26 @@
 
 <div id="story-wrapper">
     <h2>{{ story.title }}</h2>
-    {% comment %} <h4>{{ story.category.name }}</h4> {% endcomment %}
+
+    <div>
+    <form action="{% url 'news:favourite-story' story.pk %}" method="POST">
+        {% csrf_token %}
+
+        {% if favourited %}
+            <button type="submit", name="post_fav", value="{{ story.id }}"><i class="fas fa-star"></i></button>
+        {% else %}
+            <button type="submit", name="post_fav", value="{{ story.id }}"><i class="far fa-star"></i></button>
+        {% endif %}
+        
+        - {{ total_favs }} {{ total_favs|pluralize:"person,people" }} favourited this story
+    </form>
+    </div>
+   
+
+    {% comment %} <i class="fas fa-star"></i> {% endcomment %}
 
     <h4><a href="{% url 'news:cat-stories' story.category.name %}">{{ story.category.name }}</a></h4>
     
-    {% comment %} {% if user.is_authenticated and user.username == person.username %} {% endcomment %}
     {% if user.is_authenticated and story.author == user %}
         <a href="{% url 'news:update-story' story.id %}">Edit Story</a>
     {% endif %}
