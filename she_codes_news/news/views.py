@@ -55,6 +55,10 @@ class StoryView(generic.DetailView):
         context['favourited'] = favourited 
         return context
 
+#     is_favourite = False
+
+#     if post.favourites.filter(id=request.user.id).exists():
+#         is_favourite = True
 
 def FavouriteView(request,pk):
     post = get_object_or_404(NewsStory, id=request.POST.get('post_fav'))
@@ -66,6 +70,16 @@ def FavouriteView(request,pk):
         post.favourites.add(request.user)
         favourited = True
     return HttpResponseRedirect(reverse('news:story', args=[str(pk),]))
+
+
+
+# def favourite_post(request, id):
+#     post = get_object_or_404(NewsStory, id=id)
+#     if post.favourites.filter(id=request.user.id).exists():
+#         post.favourites.remove(request.user)
+#     else:
+#         post.favourite.add(request.user)
+#     return HttpResponseRedirect(post.get_absolute_url())
 
 
 class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView): #LoginRequiredMixin, UserPassesTestMixin, 

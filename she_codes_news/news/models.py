@@ -35,6 +35,3 @@ class NewsStory(models.Model):
     def fav_count(self):
         return self.favourites.count()
 
-
-
-

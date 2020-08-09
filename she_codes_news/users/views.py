@@ -20,7 +20,7 @@ class UserView(generic.DetailView):
 
     def get_slug_field(self):
         return 'username'
-   
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         person = CustomUser.objects.filter(username=self.kwargs['slug']).first()
@@ -28,8 +28,6 @@ class UserView(generic.DetailView):
         context['person'] = person
         context['favourited'] = posts
         return context
-
-
 
 class UpdateAccountView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = CustomUser
