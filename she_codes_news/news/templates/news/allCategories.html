@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'news/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <a href="{% url 'news:newsStory' %}">Write New Story</a>
+    <h2>All Categories</h2>
+
+<ul>
+    {% for category in categories %}
+        <h4>{{ category.name }}</h4>
+         {% if category.cat_stories.all %}
+            {% for story in category.cat_stories.all %}
+                <li>
+                    <a href="{% url 'news:story' story.id %}">{{ story.title }}</a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <p>No stories are available.</p>
+        {% endif %}
+    {% endfor %}
+        <h4>Uncategorised</h4>
+        {% for story in no_cat %}
+            <li>
+                <a href="{% url 'news:story' story.id %}">{{ story.title }}</a>
+            </li>
+        {% endfor %}
+</ul>
+
+{% endblock %}
+
+ 

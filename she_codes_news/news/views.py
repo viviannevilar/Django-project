@@ -25,6 +25,8 @@ class IndexView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['latest_stories'] = NewsStory.objects.order_by('-pub_date')[:4]
         context['all_stories'] = NewsStory.objects.order_by('-pub_date')
+        cat_funny = Category.objects.get(name='Funny')
+        context['funny'] = NewsStory.objects.filter(category=cat_funny)
         return context
 
 class StoryView(generic.DetailView):
@@ -133,13 +135,15 @@ class CreateCategoryView(LoginRequiredMixin,generic.CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-# def CategoryCreateView(request,pk):
-#     post = get_object_or_404(NewsStory, id=request.POST.get('post_fav'))
-#     favourited = False
-#     if post.favourites.filter(id=request.user.id).exists():
-#         post.favourites.remove(request.user)
-#         favourited = False
-#     else:
-#         post.favourites.add(request.user)
-#         favourited = True
-#     return HttpResponseRedirect(reverse('news:story', args=[str(pk),]))
+
+class AllCategoriesView(generic.ListView):
+    model = Category
+    context_object_name = 'categories'
+    template_name = 'news/allCategories.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stories = NewsStory.objects.filter(category=None)
+        context['no_cat'] = stories
+        return context
+

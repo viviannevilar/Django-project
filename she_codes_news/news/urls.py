@@ -15,6 +15,7 @@ urlpatterns = [
     path('uncategorised/', views.UncategorisedStoriesView.as_view(), name='uncat-stories'),
     path('all/uncategorised/', views.UncatStoriesView.as_view(), name='uncat-all-stories'),
     path('create_category', views.CreateCategoryView.as_view(), name='create-cat'),
+    path('all_categories', views.AllCategoriesView.as_view(), name='all-cat')
     # path('stories/mine/', views.MyStoriesView.as_view(), name='mystories'),    
 ]
 

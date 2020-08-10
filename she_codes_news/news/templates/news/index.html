@@ -23,9 +23,10 @@
         {% endif %}
     </div>
 
-    <div id="all-stories">
-        {% if all_stories %}
-            {% for story in all_stories %}
+    <div id="cat-funny">
+        {% if funny %}
+            <h4>Funny</h4>
+            {% for story in funny %}
                 {% include "./storyCard.html" with story=story %}
             {% endfor %}
         {% else %}

@@ -1,7 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
 from django.views import generic
-#from .models import CustomUser
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.shortcuts import get_object_or_404
 from news.models import NewsStory
@@ -25,7 +24,7 @@ class UserView(generic.DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        person = User.objects.filter(username=self.kwargs['slug']).first()
+        person = User.objects.get(username=self.kwargs['slug'])
         posts = NewsStory.objects.filter(favourites=person.id)
         context['person'] = person
         context['favourited'] = posts

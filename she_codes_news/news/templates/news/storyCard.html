@@ -8,6 +8,11 @@
         <div class="story-card-text">
             <h3>{{ story.title }}</h3>
             <h4>{{ story.author }}</h4>
+            {% if story.category %}
+            <h4>{{ story.category }}</h4>
+            {% else %}
+            <h4>Uncategorised</h4>
+            {% endif %}
             <h4>{{ story.pub_date }}</h4>
         </div>
     </a>

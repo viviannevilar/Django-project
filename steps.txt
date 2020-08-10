@@ -289,3 +289,33 @@ def get_queryset(self):
 model = NewsStory
 
 ################################################################
+
+Filter by status
+
+################################################################
+
+staff = CustomUser.objects.filter(is_staff=True)
+
+
+also
+
+################################################################
+
+
+Query
+
+to get a single object, use .get. To get many, use filter
+
+user = User.objects.get(id=2)
+
+staff = User.objects.filter(is_staff=True)
+
+
+Example: the two ways below are equivalent:
+
+person = User.objects.filter(username=self.kwargs['slug']).first()
+person = User.objects.get(username=self.kwargs['slug'])
+
+################################################################
+
+
