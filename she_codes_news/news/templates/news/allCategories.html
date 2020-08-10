@@ -8,11 +8,11 @@
 {% block content %}
 
     <a href="{% url 'news:newsStory' %}">Write New Story</a>
-    <h2>All Categories</h2>
+    <h2>Categories</h2>
 
 <ul>
     {% for category in categories %}
-        <h4>{{ category.name }}</h4>
+        <a href="{% url 'news:cat-stories' category %}"><h4>{{ category.name }}</h4></a>
          {% if category.cat_stories.all %}
             {% for story in category.cat_stories.all %}
                 <li>
@@ -23,7 +23,7 @@
             <p>No stories are available.</p>
         {% endif %}
     {% endfor %}
-        <h4>Uncategorised</h4>
+        <a href="{% url 'news:uncat-stories' %}"><h4>Uncategorised</h4></a>
         {% for story in no_cat %}
             <li>
                 <a href="{% url 'news:story' story.id %}">{{ story.title }}</a>

@@ -125,7 +125,7 @@ class UncatStoriesView(generic.TemplateView):
         context['stories'] = stories
         return context
 
-class CreateCategoryView(LoginRequiredMixin,generic.CreateView):
+class CreateCategoryView(LoginRequiredMixin,UserPassesTestMixin, generic.CreateView):
     form_class = CategoryForm
     context_object_name = 'categoryForm'
     template_name = 'news/createCategory.html'
@@ -134,6 +134,9 @@ class CreateCategoryView(LoginRequiredMixin,generic.CreateView):
     def form_valid(self,form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+    def test_func(self):
+        return self.request.user.is_staff 
 
 
 class AllCategoriesView(generic.ListView):

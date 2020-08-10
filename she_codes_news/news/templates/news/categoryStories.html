@@ -10,7 +10,7 @@
     <a href="{% url 'news:newsStory' %}">Write New Story</a>
     <h2>Stories for category {{ category }}</h2>
 
-<a href="{% url 'news:cat-all-stories' category.name %}">All Stories for this category<a>
+<a href="{% url 'news:cat-all-stories' category.name %}"><b>See All</b><a>
 <ul>
     {% if category.cat_stories.all %}
         {% for story in category.cat_stories.all %}

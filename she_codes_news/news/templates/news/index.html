@@ -23,9 +23,12 @@
         {% endif %}
     </div>
 
-    <div id="cat-funny">
+    <a href="{% url 'news:all-cat' %}"><h2>Categories</h2></a>
+    
+
+    <h4>Funny</h4><br>
+    <div id="all-stories">
         {% if funny %}
-            <h4>Funny</h4>
             {% for story in funny %}
                 {% include "./storyCard.html" with story=story %}
             {% endfor %}
