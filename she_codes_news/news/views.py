@@ -1,8 +1,7 @@
 from django.views import generic
 from django.urls import reverse_lazy, reverse
 from .models import NewsStory, Category
-from .forms import StoryForm
-#from users.models import CustomUser
+from .forms import StoryForm, CategoryForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
@@ -123,3 +122,24 @@ class UncatStoriesView(generic.TemplateView):
         stories = NewsStory.objects.filter(category=None)
         context['stories'] = stories
         return context
+
+class CreateCategoryView(LoginRequiredMixin,generic.CreateView):
+    form_class = CategoryForm
+    context_object_name = 'categoryForm'
+    template_name = 'news/createCategory.html'
+    success_url = reverse_lazy('news:index')
+
+    def form_valid(self,form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+# def CategoryCreateView(request,pk):
+#     post = get_object_or_404(NewsStory, id=request.POST.get('post_fav'))
+#     favourited = False
+#     if post.favourites.filter(id=request.user.id).exists():
+#         post.favourites.remove(request.user)
+#         favourited = False
+#     else:
+#         post.favourites.add(request.user)
+#         favourited = True
+#     return HttpResponseRedirect(reverse('news:story', args=[str(pk),]))
