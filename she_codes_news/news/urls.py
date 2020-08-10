@@ -11,7 +11,9 @@ urlpatterns = [
     path('add-story/', views.AddStoryView.as_view(), name='newsStory'),
     path('authors/<str:username>/', views.UserStoriesView.as_view(), name='userstories'),
     path('categories/<str:slug>/', views.CategoryStoriesView.as_view(), name='cat-stories'),
-    path('uncategorised/', views.UncategorisedStoriesView.as_view(), name='uncat-stories')
+    path('cat/all/<str:slug>/', views.CatStoriesView.as_view(), name='cat-all-stories'),
+    path('uncategorised/', views.UncategorisedStoriesView.as_view(), name='uncat-stories'),
+    path('all/uncategorised/', views.UncatStoriesView.as_view(), name='uncat-all-stories'),
     # path('stories/mine/', views.MyStoriesView.as_view(), name='mystories'),    
 ]
 

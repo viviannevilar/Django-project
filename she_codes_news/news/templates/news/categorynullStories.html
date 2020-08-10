@@ -8,12 +8,12 @@
 {% block content %}
 
     <a href="{% url 'news:newsStory' %}">Write New Story</a>
-    <h2>Stories for category {{ category }}</h2>
+    <h2>Uncategorised Stories</h2>
 
-<a href="{% url 'news:cat-all-stories' category.name %}">All Stories for this category<a>
+<a href="{% url 'news:uncat-all-stories' %}">All Stories for this category<a>
 <ul>
-    {% if category.cat_stories.all %}
-        {% for story in category.cat_stories.all %}
+    {% if stories %}
+        {% for story in stories %}
         <li>
             <a href="{% url 'news:story' story.id %}">{{ story.title }}</a>
         </li>

@@ -10,9 +10,10 @@
     <a href="{% url 'news:newsStory' %}">Write New Story</a>
     <h2>Stories for category {{ category }}</h2>
 
+
    <div id="user-stories">
-        {% if stories %}
-            {% for story in stories %}
+        {% if category.cat_stories.all %}
+            {% for story in category.cat_stories.all %}
                 {% include "./storyCard.html" with story=story %}
                 {% comment %} {% include "./storyCard.html" with story=story position=forloop.counter %} {% endcomment %}
             {% endfor %}
@@ -23,3 +24,5 @@
 
 
 {% endblock %}
+
+ 

@@ -7,7 +7,6 @@ from django.shortcuts import get_object_or_404
 from news.models import NewsStory
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-
 class CreateAccountView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
