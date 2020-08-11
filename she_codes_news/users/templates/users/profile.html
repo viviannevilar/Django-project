@@ -15,7 +15,6 @@
 
     {% if user.is_authenticated and user.username == person.username %}
     <a href="{% url 'users:updateaccount' person.username %}">Edit Account</a>
-    <a href="{% url 'news:newsStory' %}">Write New Story</a>
     {% endif %}
 </div>
 

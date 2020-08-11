@@ -15,6 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
+from . import settings
+
 
 urlpatterns = [
     path('news/', include('news.urls')),
@@ -23,3 +26,10 @@ urlpatterns = [
     path('users/', include('django.contrib.auth.urls')),
     #path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),  
 ]
+
+
+if settings.DEBUG:
+    # enable local preview of error pages if in Debug mode
+    urlpatterns.append(path('403', TemplateView.as_view(template_name="403.html")))
+    urlpatterns.append(path('404', TemplateView.as_view(template_name="404.html")))
+    urlpatterns.append(path('500', TemplateView.as_view(template_name="500.html")))

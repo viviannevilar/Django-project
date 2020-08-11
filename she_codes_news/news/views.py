@@ -91,8 +91,7 @@ class CategoryStoriesView(generic.DetailView):
     model = Category
     template_name = 'news/categoryStories.html' 
     context_object_name = 'category'
-    #paginate_by = 5
-
+    
     def get_slug_field(self):
         return 'name'
 

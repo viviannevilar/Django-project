@@ -6,10 +6,6 @@
 {% endblock %}
 
 {% block content %}
-    {% comment %} Only displays the option to add new story if user is authenticated {% endcomment %}
-    {% if user.is_authenticated %}
-    <a href="{% url 'news:newsStory' %}">Write New Story</a>
-    {% endif %}
     
     <h2>Latest News</h2>
 
