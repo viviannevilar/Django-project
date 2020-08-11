@@ -35,6 +35,7 @@ class NewsStory(models.Model):
         )
     favourites = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='favourites')
 
+    @property
     def fav_count(self):
         return self.favourites.count()
 

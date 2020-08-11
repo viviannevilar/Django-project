@@ -4,8 +4,10 @@ from .models import NewsStory, Category
 from .forms import StoryForm, CategoryForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 from django.utils import timezone
 import pytz
 
@@ -18,8 +20,12 @@ class IndexView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['latest_stories'] = NewsStory.objects.order_by('-pub_date')[:4]
         context['all_stories'] = NewsStory.objects.order_by('-pub_date')
+        #context['most_fav'] = sorted(NewsStory.objects.all(),  key=lambda m: m.fav_count)[:6]
         cat_funny = Category.objects.get(name='Funny')
         context['funny'] = NewsStory.objects.filter(category=cat_funny)
+        # categories = Category.objects.all()
+        # for category in categories:
+        #     context[f"{category}"] = NewsStory.objects.filter(category=category)
         return context
 
 class StoryView(generic.DetailView):
@@ -29,7 +35,7 @@ class StoryView(generic.DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         post = get_object_or_404(NewsStory, id=self.kwargs['pk'])
-        total_favs = post.fav_count()
+        total_favs = post.fav_count
 
         favourited = False
         if post.favourites.filter(id=self.request.user.id).exists():
@@ -87,12 +93,17 @@ class DeleteStoryView(LoginRequiredMixin,UserPassesTestMixin,generic.DeleteView)
     model = NewsStory
     success_url = reverse_lazy('news:index')
     template_name = 'news/deleteStory.html'
+    success_message = "Story Deleted Successfully"
 
     def test_func(self):
         story = self.get_object()
         if self.request.user == story.author:
             return True
         return False
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(DeleteStoryView, self).delete(request, *args, **kwargs)
 
 class UserStoriesView(generic.ListView):
     model = NewsStory
@@ -152,11 +163,12 @@ class AllCategoriesView(generic.ListView):
         context['no_cat'] = stories
         return context
 
-class CreateCategoryView(LoginRequiredMixin,UserPassesTestMixin, generic.CreateView):
+class CreateCategoryView(SuccessMessageMixin,LoginRequiredMixin,UserPassesTestMixin, generic.CreateView):
     form_class = CategoryForm
     context_object_name = 'categoryForm'
     template_name = 'news/createCategory.html'
     success_url = reverse_lazy('news:index')
+    success_message = "Category created successfully!"
 
     def form_valid(self,form):
         form.instance.author = self.request.user

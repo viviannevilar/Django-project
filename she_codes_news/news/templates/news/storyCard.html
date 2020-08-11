@@ -7,7 +7,11 @@
         {% endif %}
         <div class="story-card-text">
             <h3>{{ story.title }}</h3>
-            <h4>{{ story.author }}</h4>
+            {% if story.author.first_name and story.author.last_name %}
+                <h4>{{ story.author.first_name }} {{ story.author.last_name }}</h4>
+            {% else %}
+                <h4>{{ story.author }}</h4>
+            {% endif %}
             {% if story.category %}
             <h4>{{ story.category }}</h4>
             {% else %}

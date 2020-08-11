@@ -8,7 +8,11 @@
 {% block content %}
 
 <div id="story-wrapper">
-    <h2>{{ person.username }}'s Profile</h2>
+    {% if person.first_name and person.last_name %}
+        <h2>{{ person.first_name }} {{ person.last_name }}'s Profile</h2>
+    {% else %}
+        <h2>{{ person.username }}'s Profile</h2>
+    {% endif %}
     <a href="{% url 'news:userstories' person.username %}">All Stories</a>
 
     {% if user.is_authenticated and user.username == person.username %}

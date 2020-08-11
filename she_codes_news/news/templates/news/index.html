@@ -6,7 +6,16 @@
 {% endblock %}
 
 {% block content %}
-    
+<div id="messages">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+
     <h2>Latest News</h2>
 
     <div id="latest-stories">
@@ -19,8 +28,18 @@
         {% endif %}
     </div>
 
-    <a href="{% url 'news:all-cat' %}"><h2>Categories</h2></a>
-    
+    <a href="{% url 'news:all-cat' %}"><h2>Favourite Stories</h2></a>
+    <div id="all-stories">
+        {% if most_fav %}
+            {% for story in most_fav %}
+                {% include "./storyCard.html" with story=story %}
+            {% endfor %}
+        {% else %}
+            <p>No stories are available.</p>
+        {% endif %}
+    </div>
+
+
 
     <h4>Funny</h4><br>
     <div id="all-stories">
