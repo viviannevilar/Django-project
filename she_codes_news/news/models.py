@@ -14,14 +14,9 @@ class Category(models.Model):
         return self.name
         #return str(self.id) + "-" + self.name
 
-# STATUS = (
-#     (0,"Draft"),
-#     (1,"Publish")
-# )
-
 class NewsStory(models.Model):
     title = models.CharField(max_length=200)
-    pub_date = models.DateTimeField(auto_now_add=True,null=True)#auto_now_add=True)#
+    pub_date = models.DateTimeField(null=True,blank=True)#auto_now_add=True
     edit_date = models.DateTimeField(auto_now=True,blank=True,null=True)
     content = models.TextField()
     image = models.URLField(default='https://i.imgur.com/odto5AG.jpg', blank=True, max_length=200)
@@ -43,7 +38,12 @@ class NewsStory(models.Model):
     def fav_count(self):
         return self.favourites.count()
 
-    #@property
+    @property
     def edited(self):
+        if self.pub_date:
+            draft = (self.edit_date.replace(microsecond=0) - self.pub_date.replace(microsecond=0)) > datetime.timedelta(seconds=1)
+        else:
+            draft = True
         """ returns True if pub_date and edited are essentially the same """
-        return (self.edit_date.replace(microsecond=0) - self.pub_date.replace(microsecond=0)) > datetime.timedelta(seconds=2)
+        return draft
+   

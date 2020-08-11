@@ -317,5 +317,31 @@ person = User.objects.filter(username=self.kwargs['slug']).first()
 person = User.objects.get(username=self.kwargs['slug'])
 
 ################################################################
+Getting stuff in the form_valid for CreateView - check whether a
+button was used or the other
 
 
+   def form_valid(self,form):
+        form.instance.author = self.request.user
+        if '_publish' in self.request.POST:
+            form.instance.pub_date = timezone.now()
+            #form.save()        
+        return super(AddStoryView, self).form_valid(form)
+
+
+    # def form_valid(self,form):
+    #     form.instance.author = self.request.user
+    #     self.object = form.save()
+    #     if '_save' in self.request.POST:
+    #         self.object.pub_date = NULL
+    #         self.object.save()       
+    #     return HttpResponseRedirect(self.get_success_url())
+
+
+    # def form_valid(self,form):
+    #     form.instance.author = self.request.user
+    #     self.object = form.save()
+    #     if '_save' in self.request.POST:
+    #         return HttpResponseRedirect('500')
+    #     else:
+    #         return HttpResponseRedirect(reverse('403'))

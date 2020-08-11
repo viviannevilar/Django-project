@@ -7,8 +7,6 @@
 
 {% block content %}
 
-
-
 <div id="story-wrapper">
     <h2>{{ person.username }}'s Profile</h2>
     <a href="{% url 'news:userstories' person.username %}">All Stories</a>
@@ -33,9 +31,11 @@ Stories by {{ person.username }}
 <ul>
     {% if person.published_stories.all %}
         {% for story in person.published_stories.all %}
+            {% if story.pub_date %}
         <li>
             <a href="{% url 'news:story' story.id %}">{{ story.title }}</a>
         </li>
+            {% endif %}
         {% endfor %}
     {% else %}
         <p>No stories are available.</p>
@@ -58,6 +58,29 @@ Favourited
     {% endif %}
 </ul>
 {% endif %}
+
+
+
+{% if user.is_authenticated and user.username == person.username %}
+Drafts
+<ul>
+    {% if person.published_stories.all %}
+        {% for story in person.published_stories.all %}
+            {% if not story.pub_date %}
+        <li>
+            {{ story.title }}
+        </li>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>No stories are available.</p>
+    {% endif %}
+</ul>
+{% endif %}
+
+
+
+
 
 
 {% endblock %}

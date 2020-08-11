@@ -6,7 +6,8 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
-
+from django.utils import timezone
+import pytz
 
     
 class IndexView(generic.ListView):
@@ -58,16 +59,22 @@ class AddStoryView(LoginRequiredMixin,generic.CreateView):
 
     def form_valid(self,form):
         form.instance.author = self.request.user
-        return super().form_valid(form)
-
+        if '_publish' in self.request.POST:
+            form.instance.pub_date = timezone.now()
+            #form.save()        
+        return super(AddStoryView, self).form_valid(form)
+ 
 class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView): 
     model = NewsStory
     success_url = reverse_lazy('news:index')
-    fields = ["title","content"]
+    fields = ["title","content","category"]
     template_name = "news/updateStory.html"
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        if '_publish' in self.request.POST:
+            form.instance.pub_date = timezone.now()
+            #form.save()        
         return super().form_valid(form)
 
     def test_func(self):

@@ -2,10 +2,11 @@
 
 {% block content %}
 <div class="my-form">
-<form action="" id="create-story" method = "post">
+<form action="" id="create-story" method = "POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="submit">
+    <button name="_publish" type="submit" value="_publish">Post</button>
+    <button name="_save" type="submit" value="_save">Save</button>
 </form>
 </div>
 {% endblock %}

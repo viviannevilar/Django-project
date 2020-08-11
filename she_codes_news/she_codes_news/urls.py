@@ -30,6 +30,6 @@ urlpatterns = [
 
 if settings.DEBUG:
     # enable local preview of error pages if in Debug mode
-    urlpatterns.append(path('403', TemplateView.as_view(template_name="403.html")))
+    urlpatterns.append(path('403', TemplateView.as_view(template_name="403.html"),name='403'))
     urlpatterns.append(path('404', TemplateView.as_view(template_name="404.html")))
     urlpatterns.append(path('500', TemplateView.as_view(template_name="500.html")))

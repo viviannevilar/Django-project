@@ -9,10 +9,13 @@
 
 <div id="story-wrapper">
     <h2>{{ story.title }}</h2>
-    Published on {{ story.pub_date }}<br>
-    {% if story.edited %}
-        Last edited on {{ story.edit_date }}
+
+    {% if story.category %}
+        <h4><a href="{% url 'news:cat-stories' story.category.name %}">{{ story.category.name }}</a></h4>
+    {% else %}
+        <h4><a href="{% url 'news:uncat-stories' %}">Uncategorised</a></h4>
     {% endif %}
+
 
     <div>
     <form action="{% url 'news:favourite-story' story.pk %}" method="POST">
@@ -27,12 +30,16 @@
         - {{ total_favs }} {{ total_favs|pluralize:"person,people" }} favourited this story
     </form>
     </div>
-   
-    {% if story.category %}
-        <h4><a href="{% url 'news:cat-stories' story.category.name %}">{{ story.category.name }}</a></h4>
+
+    {% if story.pub_date %}
+        Published on {{ story.pub_date }}<br>
     {% else %}
-        <h4><a href="{% url 'news:uncat-stories' %}">Uncategorised</a></h4>
+        Draft
     {% endif %}
+    {% if story.edited %}
+        Last edited on {{ story.edit_date }}
+    {% endif %}
+
 
     {% if user.is_authenticated and story.author == user %}
         <a href="{% url 'news:update-story' story.id %}">Edit Story</a>

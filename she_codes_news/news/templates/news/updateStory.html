@@ -7,7 +7,11 @@
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save</button>
-    <a class="delete" href="{% url 'news:delete-story' object.id %}">Delete</a>
+    <button name="_save" type="submit">Save</button>
+    {% if not object.pub_date %}
+        <button name="_publish" type="submit">Publish</button>
+    {% endif %}
+        <button><a class="delete" href="{% url 'news:delete-story' object.id %}">Delete</a></button>
 </form>
 {% endblock %}
+
