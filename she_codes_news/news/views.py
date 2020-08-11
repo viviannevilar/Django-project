@@ -7,15 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
 
-class AddStoryView(LoginRequiredMixin,generic.CreateView):
-    form_class = StoryForm
-    context_object_name = 'storyForm'
-    template_name = 'news/createStory.html'
-    success_url = reverse_lazy('news:index')
 
-    def form_valid(self,form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
     
 class IndexView(generic.ListView):
     template_name = 'news/index.html'
@@ -58,14 +50,21 @@ def FavouriteView(request,pk):
         favourited = True
     return HttpResponseRedirect(reverse('news:story', args=[str(pk),]))
 
+class AddStoryView(LoginRequiredMixin,generic.CreateView):
+    form_class = StoryForm
+    context_object_name = 'storyForm'
+    template_name = 'news/createStory.html'
+    success_url = reverse_lazy('news:index')
+
+    def form_valid(self,form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView): 
     model = NewsStory
     success_url = reverse_lazy('news:index')
     fields = ["title","content"]
     template_name = "news/updateStory.html"
-
-    # def get_slug_field(self):
-    #     return 'username'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -73,10 +72,9 @@ class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateVie
 
     def test_func(self):
         story = self.get_object()
-        if self.request.user == story.author: #post.author:
+        if self.request.user == story.author: 
             return True
         return False
-
 
 class DeleteStoryView(LoginRequiredMixin,UserPassesTestMixin,generic.DeleteView):
     model = NewsStory
@@ -88,8 +86,6 @@ class DeleteStoryView(LoginRequiredMixin,UserPassesTestMixin,generic.DeleteView)
         if self.request.user == story.author:
             return True
         return False
-
-
 
 class UserStoriesView(generic.ListView):
     model = NewsStory
@@ -138,6 +134,17 @@ class UncatStoriesView(generic.TemplateView):
         context['stories'] = stories
         return context
 
+class AllCategoriesView(generic.ListView):
+    model = Category
+    context_object_name = 'categories'
+    template_name = 'news/allCategories.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stories = NewsStory.objects.filter(category=None)
+        context['no_cat'] = stories
+        return context
+
 class CreateCategoryView(LoginRequiredMixin,UserPassesTestMixin, generic.CreateView):
     form_class = CategoryForm
     context_object_name = 'categoryForm'
@@ -150,16 +157,3 @@ class CreateCategoryView(LoginRequiredMixin,UserPassesTestMixin, generic.CreateV
 
     def test_func(self):
         return self.request.user.is_staff 
-
-
-class AllCategoriesView(generic.ListView):
-    model = Category
-    context_object_name = 'categories'
-    template_name = 'news/allCategories.html'
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(**kwargs)
-        stories = NewsStory.objects.filter(category=None)
-        context['no_cat'] = stories
-        return context
-

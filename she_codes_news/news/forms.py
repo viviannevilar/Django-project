@@ -7,17 +7,17 @@ class StoryForm(ModelForm):
     class Meta:
         model = NewsStory
         #fields = "__all__"    
-        fields = ['title', 'pub_date', 'content', 'image','category']     
+        fields = ['title', 'content', 'image','category']     
         #exclude = ['author'] #yet another way to set the fields, by excluding some         
         widgets = {
-            'pub_date': forms.DateInput(
-                format = ('%d/%m/%Y'),
-                attrs = {
-                    'class': 'form-control',
-                    'placeholder': 'Select a date',
-                    'type': 'date'
-                }
-            ),
+            # 'pub_date': forms.DateInput(
+            #     format = ('%d/%m/%Y'),
+            #     attrs = {
+            #         'class': 'form-control',
+            #         'placeholder': 'Select a date',
+            #         'type': 'date'
+            #     }
+            # ),
             'title': forms.TextInput(
                 attrs = {
                     'class': 'form-title'

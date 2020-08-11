@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+import datetime
 
 class Category(models.Model):
     name = models.CharField(max_length = 30, unique=True)
@@ -20,8 +21,8 @@ class Category(models.Model):
 
 class NewsStory(models.Model):
     title = models.CharField(max_length=200)
-    pub_date = models.DateTimeField(null=True)#auto_now_add=True)#
-    edited = models.DateTimeField(auto_now=True,blank=True,null=True)
+    pub_date = models.DateTimeField(auto_now_add=True,null=True)#auto_now_add=True)#
+    edit_date = models.DateTimeField(auto_now=True,blank=True,null=True)
     content = models.TextField()
     image = models.URLField(default='https://i.imgur.com/odto5AG.jpg', blank=True, max_length=200)
     author = models.ForeignKey(
@@ -42,3 +43,7 @@ class NewsStory(models.Model):
     def fav_count(self):
         return self.favourites.count()
 
+    #@property
+    def edited(self):
+        """ returns True if pub_date and edited are essentially the same """
+        return (self.edit_date.replace(microsecond=0) - self.pub_date.replace(microsecond=0)) > datetime.timedelta(seconds=2)

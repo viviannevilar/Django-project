@@ -9,6 +9,10 @@
 
 <div id="story-wrapper">
     <h2>{{ story.title }}</h2>
+    Published on {{ story.pub_date }}<br>
+    {% if story.edited %}
+        Last edited on {{ story.edit_date }}
+    {% endif %}
 
     <div>
     <form action="{% url 'news:favourite-story' story.pk %}" method="POST">
