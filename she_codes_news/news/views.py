@@ -77,6 +77,20 @@ class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateVie
             return True
         return False
 
+
+class DeleteStoryView(LoginRequiredMixin,UserPassesTestMixin,generic.DeleteView):
+    model = NewsStory
+    success_url = reverse_lazy('news:index')
+    template_name = 'news/deleteStory.html'
+
+    def test_func(self):
+        story = self.get_object()
+        if self.request.user == story.author:
+            return True
+        return False
+
+
+
 class UserStoriesView(generic.ListView):
     model = NewsStory
     template_name = 'news/userStories.html' 

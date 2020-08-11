@@ -9,7 +9,6 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-
 class CreateAccountView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
