@@ -10,6 +10,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.utils import timezone
 import pytz
+from django.db.models import Q
 
     
 class IndexView(generic.ListView):
@@ -176,3 +177,15 @@ class CreateCategoryView(SuccessMessageMixin,LoginRequiredMixin,UserPassesTestMi
 
     def test_func(self):
         return self.request.user.is_staff 
+
+
+class SearchResultsView(generic.ListView):
+    model = NewsStory
+    template_name = 'news/search_results.html'
+
+    def get_queryset(self): # new
+        query = self.request.GET.get('q')
+        object_list = NewsStory.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query) #Q(author__icontains=query) | 
+        )
+        return object_list
