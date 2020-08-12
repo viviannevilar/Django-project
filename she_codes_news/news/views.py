@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.utils import timezone
 import pytz
 from django.db.models import Q
+#from django.core.paginator import Paginator
 
     
 class IndexView(generic.ListView):
@@ -178,14 +179,22 @@ class CreateCategoryView(SuccessMessageMixin,LoginRequiredMixin,UserPassesTestMi
     def test_func(self):
         return self.request.user.is_staff 
 
-
 class SearchResultsView(generic.ListView):
     model = NewsStory
-    template_name = 'news/search_results.html'
+    template_name = 'news/search.html'
 
     def get_queryset(self): # new
         query = self.request.GET.get('q')
-        object_list = NewsStory.objects.filter(
-            Q(title__icontains=query) | Q(content__icontains=query) #Q(author__icontains=query) | 
-        )
+        if query:
+            object_list = NewsStory.objects.filter(
+                Q(title__icontains=query) | Q(content__icontains=query) | Q(author__username__icontains=query)  
+            )
+            #object_list = object_list.distinct()
+        else:
+            object_list = None
         return object_list
+
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['count'] = object_list.count()
+    #     return context
