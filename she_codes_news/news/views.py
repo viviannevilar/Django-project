@@ -13,6 +13,7 @@ import pytz
 from django.db.models import Q
 #from django.core.paginator import Paginator
 
+User = get_user_model()
     
 class IndexView(generic.ListView):
     template_name = 'news/index.html'
@@ -114,12 +115,17 @@ class UserStoriesView(generic.ListView):
     model = NewsStory
     template_name = 'news/userStories.html' 
     context_object_name = 'stories'
-    #paginate_by = 5
+    paginate_by = 9
 
     def get_queryset(self):
         user = get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
-        return NewsStory.objects.filter(author=user).order_by('-pub_date')
+        stories = NewsStory.objects.filter(pub_date__isnull = False).filter(author=user).order_by('-pub_date')
+        return stories
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['person'] = User.objects.get(username=self.kwargs.get('username'))
+        return context
   
 class CategoryStoriesView(generic.DetailView):
     model = Category

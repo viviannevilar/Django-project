@@ -7,10 +7,14 @@
 
 {% block content %}
 
-    <a href="{% url 'news:newsStory' %}">Write New Story</a>
-    <h2>Latest News</h2>
+    {% if request.user == person %}
+        <h2>My Latest Stories</h2>
+    {% else %}
+        <h2>{{ person.username }}'s Latest Stories</h2>
+    {% endif %}
 
-    <div id="user-stories">
+    
+    <div id="all-stories">
         {% if stories %}
             {% for story in stories %}
                 {% include "./storyCard.html" with story=story %}
@@ -20,6 +24,48 @@
             <p>No stories are available.</p>
         {% endif %}
     </div>
+
+
+<div class="paginator">
+
+    {% if is_paginated %}
+
+        {% if page_obj.has_previous %}
+            <a class="paginator" href="?page=1">First</a>
+            <a class="paginator" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="paginator" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="paginator" href="?page={{ num }}">{{ num }}</a> 
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a  class="paginator" href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a  class="paginator" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+
+    {% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
  {% endblock %}    

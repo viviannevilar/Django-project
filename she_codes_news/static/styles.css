@@ -130,8 +130,39 @@ button a {
     font-family: Arial;
 }
 
+button:hover {
+    background-color: cornflowerblue;
+    border-radius: 2px;
+}
+
 p.form {
     font-size: 2rem;
     font-family: Times;
     margin: 0;
+}
+
+textarea#id_content.textarea.form-control {
+    min-height: 15em;
+    resize: none;
+}
+
+div.paginator {
+    margin-top: 2rem;
+    display:flex;
+    justify-content: center;
+}
+
+a.paginator {
+    border: 1px solid black;
+    border-radius: 2px;
+    transition: 0.5s;
+    font-size: 2rem;
+    padding: 0 0.5rem;
+    /* margin: 1rem; */
+}
+
+a.paginator:hover {
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: cornflowerblue;
 }

@@ -8,10 +8,8 @@
 {% block content %}
 
 <div id="story-wrapper">
-
       
-        <h2>{{ story.title }}</h2>
-
+    <h2>{{ story.title }}</h2>
 
     <div class="story-subtitle">
         <div class="likes">
@@ -31,45 +29,37 @@
             </form>
             {{ total_favs }} 
         </div>
-            {% include "news/authorCard.html" with story=story %}
+        
+        {% include "news/authorCard.html" with story=story %}
 
-            {% include "news/catCard.html" with story=story %}
-            {% comment %} <div>
-            {% if story.category %}
-                <a class="cat-card" href="{% url 'news:cat-stories' story.category.name %}">
-                <i class="fas fa-hashtag"></i>
-                <p> {{ story.category }} </p>
-            {% else %}
-                <a href="{% url 'news:uncat-stories' %}">
-                <i class="fas fa-hashtag"></i>
-                Uncategorised 
-            {% endif %}
-            </a>
-            </div> {% endcomment %}
+        {% include "news/catCard.html" with story=story %}
     </div> 
 
-    </div>
+</div>
 
 
-    {% if user.is_authenticated and story.author == user %}
-        <a href="{% url 'news:update-story' story.id %}">Edit Story</a>
-    {% endif %}
 
-    {% comment %} <a href="{% url 'users:profile' story.author.username %}">{{ story.author }}</a>     {% endcomment %}
 
-    <div id="story-content">
-        <img src="{{ story.image }}">
-            {% if story.pub_date %}
-        Published on {{ story.pub_date }}<br>
+<div id="story-content">
+    <img src="{{ story.image }}">
+
+    {% if story.pub_date %}
+        <b>Published on {{ story.pub_date }}</b><br>
     {% else %}
         Draft
     {% endif %}
+    
     {% if story.edited %}
         Last edited on {{ story.edit_date }}
     {% endif %}
 
-        {{ story.content|linebreaks }}
-    </div>
+
+    {% if user.is_authenticated and story.author == user %}
+        <button><a href="{% url 'news:update-story' story.id %}">Edit Story</a></button>
+    {% endif %}
+
+    {{ story.content|linebreaks }}
 </div>
+
 
 {% endblock %}

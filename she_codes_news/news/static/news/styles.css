@@ -79,6 +79,7 @@
 
 #story-content {
     text-align: justify;
+    margin-top: 1rem;
 }
 
 #story-content img {
@@ -113,14 +114,6 @@ form #create-story {
 
 .small-card {
     display: flex;   
-}
-
-a.small-card {
-    margin: auto 0;
-    /* display: flex;
-    align-items: center; */
-    
-
 }
 
 .likes {
@@ -161,6 +154,19 @@ button.fav-but {
 
 /* -------------------------------------------------------- */
 
+div.author-card {
+    height: 100%;
+    margin: 0 0.3rem;
+}
+div.cat-card {
+    height: 100%;
+}
+
+div.cat-card a.small-card {
+    height: 100%;
+    margin: 0;
+}
+
 a.author-card {
     display: flex;
 }
@@ -172,16 +178,19 @@ img#author-card-pic {
 
 .story-subtitle {
     display: flex;
+    align-items: center;
+    /* justify-content: space-around; */
 }
 
 a.small-card, div.search-card {
     display: flex;
     padding: 0 0.8em 0 0;
     border: 1px solid black;
+    border-radius: 4px;
 }
 
 .small-card p {
-    margin: auto 0;
+    margin: 20.5px 0;
     font-size: 1.5rem;
 }
 
@@ -226,6 +235,7 @@ div#profile-pic img {
     border: 2px solid black;
     border-radius: 2rem;
     margin: 1.5rem;
+    min-width: 30rem;
     
 }
 
@@ -293,3 +303,10 @@ div.search-card-small:hover {
     background-color: cornflowerblue;
 }
 
+div.story-content {
+    font-size: 1.5rem;
+}
+
+div.story-card-small {
+    border: 0;
+}
