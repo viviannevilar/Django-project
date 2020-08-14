@@ -7,20 +7,20 @@
 
 {% block content %}
 
-    <h2>Uncategorised Stories</h2>
-
-<a href="{% url 'news:uncat-all-stories' %}">All Stories for this category<a>
-<ul>
-    {% if stories %}
-        {% for story in stories %}
-        <li>
-            <a href="{% url 'news:story' story.id %}">{{ story.title }}</a>
-        </li>
-        {% endfor %}
-    {% else %}
-        <p>No stories are available.</p>
-    {% endif %}
-</ul>
+<div class="prof-container-stories">
+ <h2 class="profile">Uncategorised Stories</h2>
+</div>
+    <div id="person-latest-stories">
+        {% if stories %}
+            {% for story in stories %}
+                {% if story.pub_date %}
+                    {% include "news/storyCardCategory.html" with story=story %}
+            {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>No stories are available.</p>
+        {% endif %}
+    </div>
 
 {% endblock %}
 

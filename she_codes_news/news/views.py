@@ -145,24 +145,24 @@ class UncategorisedStoriesView(generic.TemplateView):
         context['stories'] = stories
         return context
 
-class CatStoriesView(generic.DetailView):
-    model = Category
-    template_name = 'news/catStories.html' 
-    context_object_name = 'category'
-    #paginate_by = 5
+# class CatStoriesView(generic.DetailView):
+#     model = Category
+#     template_name = 'news/catStories.html' 
+#     context_object_name = 'category'
+#     #paginate_by = 5
 
-    def get_slug_field(self):
-        return 'name'
+#     def get_slug_field(self):
+#         return 'name'
 
-class UncatStoriesView(generic.TemplateView):
-    model = Category
-    template_name = 'news/catnullStories.html'
+# class UncatStoriesView(generic.TemplateView):
+#     model = Category
+#     template_name = 'news/catnullStories.html'
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(**kwargs)
-        stories = NewsStory.objects.filter(category=None).filter(pub_date__isnull = False)
-        context['stories'] = stories
-        return context
+#     def get_context_data(self, *args, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         stories = NewsStory.objects.filter(category=None).filter(pub_date__isnull = False)
+#         context['stories'] = stories
+#         return context
 
 class AllCategoriesView(generic.ListView):
     model = Category

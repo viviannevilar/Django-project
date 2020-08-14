@@ -6,20 +6,21 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Stories for category {{ category }}</h2>
 
-<a href="{% url 'news:cat-all-stories' category.name %}"><b>See All</b><a>
-<ul>
-    {% if category.cat_stories.all %}
-        {% for story in category.cat_stories.all %}
-        <li>
-            <a href="{% url 'news:story' story.id %}">{{ story.title }}</a>
-        </li>
-        {% endfor %}
-    {% else %}
-        <p>No stories are available.</p>
-    {% endif %}
-</ul>
+<div class="prof-container-stories">
+ <h2 class="profile">Stories for category {{ category }}</h2>
+</div>
+    <div id="person-latest-stories">
+        {% if category.cat_stories.all %}
+            {% for story in category.cat_stories.all %}
+                {% if story.pub_date %}
+                    {% include "news/storyCardCategory.html" with story=story %}
+            {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>No stories are available.</p>
+        {% endif %}
+    </div>
 
 {% endblock %}
 
