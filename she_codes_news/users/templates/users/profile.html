@@ -11,6 +11,9 @@
 <div class="profile-header">
     <div id="profile-pic">
         <img src="{{ person.pic }}">
+        {% if user.is_authenticated and user.username == person.username %}
+            <a href="{% url 'users:updateaccount' person.username %}">Edit Account</a>
+        {% endif %}
     </div>
 
     <div class="profile-text">
@@ -19,11 +22,8 @@
         {% else %}
             <h2>{{ person.username }}</h2>
         {% endif %}
-        <a href="{% url 'news:userstories' person.username %}">All Stories</a>
 
-        {% if user.is_authenticated and user.username == person.username %}
-        <a href="{% url 'users:updateaccount' person.username %}">Edit Account</a>
-        {% endif %}
+
         <div class="bio">
         {{ person.bio|linebreaks }}
         </div>
@@ -31,7 +31,7 @@
 </div>
 
 <div class="prof-container-stories">
- <h2 class="profile">Latest Stories  - <a href="{% url 'news:userstories' person.username %}"> See All {{ person.username }}'s Stories </a></h2>
+ <h2 class="profile">Latest Stories  - <button class="btn"><a id="make-it-blue" href="{% url 'news:userstories' person.username %}">See All</a></button></h2>
 </div>
     <div id="person-latest-stories">
         {% if stories %}

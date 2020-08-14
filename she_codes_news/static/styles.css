@@ -181,3 +181,22 @@ div#profile-pic img {
         border-radius: 50%;
 }
 
+#profile-pic a:hover {
+    border: 1px solid black;
+    background: cornflowerblue;
+    
+}
+
+#profile-pic {
+    text-align: center;
+}
+
+#profile-pic a {
+    font-size: 1.5rem;
+    padding: 0.2rem;
+    margin-top: 0.4rem;
+}
+
+button.btn {
+    border-radius: 4px;
+}

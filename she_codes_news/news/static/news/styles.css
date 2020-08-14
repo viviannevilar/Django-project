@@ -80,6 +80,7 @@
 #story-content {
     text-align: justify;
     margin-top: 1rem;
+    font-size: 1.5rem;
 }
 
 #story-content img {
@@ -354,4 +355,23 @@ button.choice-button a {
 button.chosen, button.choice-button:hover {
     background-color: cornflowerblue;
 }
-/* 'choice-button chosen' */
+
+em.draft {
+    color: red;
+    font-weight: bold;
+    font-family: monospace;
+    font-style: default;
+    font-size: 1.5rem;
+}
+
+/* div.story-title {
+    display: flex;
+}
+
+button.btn-draft {
+    background-color: red;
+    border: 1px solid black;
+    border-radius: 4px;
+    min-width: 8rem;
+    font-weight: bold;
+} */

@@ -23,14 +23,14 @@ class IndexView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['latest_stories'] = NewsStory.objects.order_by('-pub_date')[:4]
         context['all_stories'] = NewsStory.objects.order_by('-pub_date')
-        context['most_fav'] = sorted(list(NewsStory.objects.all()),  key=lambda m: m.fav_count,reverse=True)[:4]
+        context['most_fav'] = sorted(list(NewsStory.objects.filter(pub_date__isnull = False)),  key=lambda m: m.fav_count,reverse=True)[:4]
         
         categories = Category.objects.all()
         context['categories'] = []
         for category in categories:
             context['categories'].append( {
                 'name': category,
-                'stories': NewsStory.objects.filter(category=category)[:4]
+                'stories': NewsStory.objects.filter(category=category).filter(pub_date__isnull = False)[:4]
             })
         return context
 
@@ -160,7 +160,7 @@ class UncatStoriesView(generic.TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        stories = NewsStory.objects.filter(category=None)
+        stories = NewsStory.objects.filter(category=None).filter(pub_date__isnull = False)
         context['stories'] = stories
         return context
 
@@ -171,7 +171,7 @@ class AllCategoriesView(generic.ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        stories = NewsStory.objects.filter(category=None)
+        stories = NewsStory.objects.filter(category=None).filter(pub_date__isnull = False)
         context['no_cat'] = stories
         return context
 
