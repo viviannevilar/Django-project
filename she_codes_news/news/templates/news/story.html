@@ -30,7 +30,7 @@
             {{ total_favs }} 
         </div>
         
-        {% include "news/authorCard.html" with story=story %}
+        {% include "news/authorCard.html" with person=story.author %}
 
         {% include "news/catCard.html" with story=story %}
     </div> 

@@ -79,7 +79,7 @@ class AddStoryView(LoginRequiredMixin,generic.CreateView):
 class UpdateStoryView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView): 
     model = NewsStory
     success_url = reverse_lazy('news:index')
-    fields = ["title","content","category"]
+    fields = ["title","content","image","category"]
     template_name = "news/updateStory.html"
 
     def form_valid(self, form):
@@ -198,14 +198,55 @@ class SearchResultsView(generic.ListView):
         if query:
             object_list = NewsStory.objects.filter(pub_date__isnull = False).filter(
                 Q(title__icontains=query) | Q(content__icontains=query) | Q(author__username__icontains=query) 
-            )
-
-            #object_list = object_list.distinct()
+            )#.distinct()
         else:
             object_list = None
         return object_list
 
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['count'] = object_list.count()
-    #     return context
+
+class AllStoriesView(generic.ListView):
+    model = NewsStory
+    template_name = 'news/allStories.html'
+    context_object_name = 'stories'
+    paginate_by = 9
+
+    # def get_queryset(self):
+    #     return NewsStory.objects.order_by('-pub_date')
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query == 'latest':
+            stories = NewsStory.objects.filter(pub_date__isnull = False).order_by('-pub_date')
+        else:
+            stories = sorted(list(NewsStory.objects.all()),  key=lambda m: m.fav_count,reverse=True)
+        return stories
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('q')
+        if query == 'latest':
+            context['name'] = 'Latest'
+        elif query == 'top':
+            context['name'] = 'Top'
+        return context
+
+
+
+class CategoriesView(generic.ListView):
+    model = NewsStory
+    template_name = "news/allCat.html"
+    #paginate_by = 9
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        query = self.request.GET.get('q')
+        categories = Category.objects.all()
+        context['categories'] = categories
+        for category in categories:
+            if query == category.name:
+                context['name'] = category.name
+                context['stories'] = NewsStory.objects.filter(category=category).order_by('-pub_date')
+            elif query == 'uncategorised':
+                context['name'] = 'uncategorised'
+                context['stories'] = NewsStory.objects.filter(category=None).order_by('-pub_date')
+        return context

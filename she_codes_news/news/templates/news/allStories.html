@@ -7,13 +7,18 @@
 
 {% block content %}
 
-    {% if request.user == person %}
-        <h2>My Latest Stories</h2>
-    {% else %}
-        <h2>{{ person.username }}'s Latest Stories</h2>
-    {% endif %}
-
     
+
+    <div class="container-buttons">
+        {% if name == "Latest" %}
+            <button class='choice-button chosen'><h2>Latest Stories</h2></button> 
+            <button class='choice-button'><a href="{% url 'news:all-stories' %}?q=top"><h2>Top Stories</h2></a></button> 
+        {% else %}
+            <button class='choice-button'><a href="{% url 'news:all-stories' %}?q=latest"><h2>Latest Stories</h2></a></button> 
+            <button class='choice-button chosen'><h2>Top Stories</h2></button> 
+        {% endif %}
+    </div>
+
     <div id="all-stories">
         {% if stories %}
             {% for story in stories %}

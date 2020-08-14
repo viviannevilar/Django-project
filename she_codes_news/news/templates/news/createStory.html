@@ -12,6 +12,12 @@
     <button class="btn btn2" name="_save" type="submit" value="_save">Save</button>
 </form>
 </div>
+<div>
+{% if request.user.is_staff %}
+Need to create a category?
+<button class='btn'><a href="{% url 'news:create-cat' %}" target="_blank">Create Category<a></button>
+{% endif %}
+</div>
 
 
 

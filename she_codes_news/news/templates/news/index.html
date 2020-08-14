@@ -16,7 +16,7 @@
     {% endif %}
 </div>
 
-    <h2>Latest News</h2>
+    <a href="{% url 'news:all-stories' %}?q=latest"><h2>Latest Stories</h2></a>
        <div id="latest-stories">
         {% if latest_stories %}
             {% for story in latest_stories %}
@@ -27,7 +27,7 @@
         {% endif %}
     </div>
 
-    <h2>Top Stories</h2>
+    <a href="{% url 'news:all-stories' %}?q=top"><h2>Top Stories</h2></a>
     <div id="latest-stories">
         {% if most_fav %}
             {% for story in most_fav %}

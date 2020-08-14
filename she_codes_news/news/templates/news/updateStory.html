@@ -1,17 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load crispy_forms_tags %}
 
 <h2>Update Story</h2>
 
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button name="_save" type="submit">Save</button>
+    {{ form|crispy }}
+   
+    <button class='btn' name="_save" type="submit">Save</button>
     {% if not object.pub_date %}
-        <button name="_publish" type="submit">Publish</button>
+        <button class='btn' name="_publish" type="submit">Publish</button>
     {% endif %}
-        <button><a class="delete" href="{% url 'news:delete-story' object.id %}">Delete</a></button>
+        <button class='btn'><a class="delete" href="{% url 'news:delete-story' object.id %}">Delete</a></button>
+        {% if request.user.is_staff %}
+        <button class='btn'><a href="{% url 'news:create-cat' %}" target="_blank">Create Category<a></button>
+        {% endif %}
 </form>
+
+
 {% endblock %}
 

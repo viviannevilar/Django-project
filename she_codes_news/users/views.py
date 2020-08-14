@@ -1,4 +1,4 @@
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView, UpdateView
 from django.views import generic
 from .forms import CustomUserCreationForm, CustomUserChangeForm
@@ -33,15 +33,19 @@ class UserView(generic.DetailView):
 
 class UpdateAccountView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = User
-    success_url = reverse_lazy('news:index')
     fields = ['first_name', 'last_name', 'pic','bio']
     template_name = 'users/updateAccount.html'
 
     def get_slug_field(self):
         return 'username'
 
+    def get_success_url(self):  
+        if 'slug' in self.kwargs:
+            slug = self.kwargs['slug']
+        return reverse('users:profile', kwargs={'slug': slug})
+
     def test_func(self):
-        if self.request.user.username == self.kwargs['slug']: #post.author:
+        if self.request.user.username == self.kwargs['slug']:
             return True
         return False
 

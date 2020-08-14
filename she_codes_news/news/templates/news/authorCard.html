@@ -1,11 +1,11 @@
 <div class="author-card">
-    <a href="{% url 'news:story' story.id %}" class="small-card">
+    <a href="{% url 'users:profile' person.username %}" class="small-card">
     <div class="author-card-pic">
-        <img id="author-card-pic" src="{{ story.author.pic }}">
+        <img id="author-card-pic" src="{{ person.pic }}">
     </div>
 
     <p class="card-title">
-        {{ story.author }}
+        {{ person }}
     </p>
     </a>
 </div>
