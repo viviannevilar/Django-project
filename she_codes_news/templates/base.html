@@ -9,9 +9,13 @@
         <title>She Codes News</title>
         <meta name="description" content="">
         <meta name="author" content="Vivianne Vilar">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <script src="https://kit.fontawesome.com/deff17c165.js" crossorigin="anonymous"></script>
-        <link href="https://fonts.googleapis.com/css?family=Manjari&display=swap" rel="stylesheet">
+        {% comment %} <link href="https://fonts.googleapis.com/css?family=Manjari&display=swap" rel="stylesheet"> {% endcomment %}
+        <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+        
         {% block stylesheets %}{% endblock %}
     </head>
 
@@ -24,7 +28,14 @@
             </div>
             {% include './nav.html' %}
         </header>
-
-        {% block content %}{% endblock %}
+        <div class="main-body">
+            {% block content %}{% endblock %}
+        </div>
     </body>
+
+    <footer>
+     Copyright 2020 Vivianne Vilar
+    </footer>
+
+
 </html>

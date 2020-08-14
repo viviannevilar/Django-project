@@ -17,8 +17,7 @@
 </div>
 
     <h2>Latest News</h2>
-
-    <div id="latest-stories">
+       <div id="latest-stories">
         {% if latest_stories %}
             {% for story in latest_stories %}
                 {% include "./storyCard.html" with story=story position=forloop.counter %}
@@ -28,28 +27,31 @@
         {% endif %}
     </div>
 
-    <a href="{% url 'news:all-cat' %}"><h2>Favourite Stories</h2></a>
-    <div id="all-stories">
+    <h2>Top Stories</h2>
+    <div id="latest-stories">
         {% if most_fav %}
             {% for story in most_fav %}
-                {% include "./storyCard.html" with story=story %}
+                {% include "./storyCard.html" with story=story position=forloop.counter %}
             {% endfor %}
         {% else %}
             <p>No stories are available.</p>
         {% endif %}
     </div>
 
+    {% for category in categories %}
 
-
-    <h4>Funny</h4><br>
-    <div id="all-stories">
-        {% if funny %}
-            {% for story in funny %}
-                {% include "./storyCard.html" with story=story %}
+    <a href="{% url 'news:cat-all-stories' category.name %}"><h2>{{ category.name }}</h2></a>
+    <div id="latest-stories">
+        {% if category %}
+            {% for story in category.stories %}
+                {% include "./storyCard.html" with story=story position=forloop.counter %}
             {% endfor %}
         {% else %}
             <p>No stories are available.</p>
         {% endif %}
-    </div>
+    </div> 
+    {% endfor %}
+
+
 
 {% endblock %}    

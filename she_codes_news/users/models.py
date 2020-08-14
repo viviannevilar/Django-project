@@ -8,5 +8,14 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+    
 
+    # @property
+    # def full_name(self):
+    #     return self.name + " " + self.surname
 
+    # @full_name.setter
+    # def full_name(self, value):
+    #     names = value.split(' ')
+    #     self.first_name = names[0]
+    #     self.last_name = names[1]

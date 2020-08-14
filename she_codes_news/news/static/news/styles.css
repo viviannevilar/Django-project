@@ -2,6 +2,8 @@
     margin: 2px;
     border: 1px solid #000;
     padding: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .story-card img {
@@ -91,4 +93,203 @@ form #create-story {
 }
  */
 
+/* #profile-pic div img {
+    float: right;
+    margin: 0 0 10px 10px;
+    width: 50%;
+} */
+
+
+/* -------------------------------------------------------- */
+/* For the small story cards */
+
+.story-card-small {
+    border: 1px solid #000;
+    /* padding: 0.5em; */
+    border-radius: 4px;
+    margin: 0.5em;
+    min-width: 80%;
+}
+
+.small-card {
+    display: flex;   
+}
+
+a.small-card {
+    margin: auto 0;
+    /* display: flex;
+    align-items: center; */
+    
+
+}
+
+.likes {
+    height: 100%;
+    /* padding: 0.5em; */
+    text-align: center;
+    padding-bottom: 0.2rem;
+}
+
+.card-title {
+    margin: auto 0;
+    font-size: 1rem;
+}
+
+i {
+    padding: 0.3em;
+    font-size: 2.5em;
+}
+
+#small-card:hover {
+    background-color: blue;
+    transition: background .5s; 
+    cursor: pointer; 
+}
+
+.card-title h4 {
+    font-size: 1.2em;
+    margin: 0.3em 0;
+}
+
+/* -------------------------------------------------------- */
+/* For favourite button */
+
+button.fav-but {
+    border: 0;
+    background-color: transparent;
+}
+
+/* -------------------------------------------------------- */
+
+a.author-card {
+    display: flex;
+}
+
+img#author-card-pic { 
+    max-width: 5em;
+    padding: 0 0.5em;
+} 
+
+.story-subtitle {
+    display: flex;
+}
+
+a.small-card, div.search-card {
+    display: flex;
+    padding: 0 0.8em 0 0;
+    border: 1px solid black;
+}
+
+.small-card p {
+    margin: auto 0;
+    font-size: 1.5rem;
+}
+
+
+a.small-card:hover {
+    background-color: cornflowerblue;
+    border: 1px solid #000;
+    border-radius: 4px;
+}
+
+div.small-card {
+    /* border: 1px solid #000; */
+    border-radius: 4px;
+    margin: auto 0;
+}
+
+div#profile-pic { 
+    max-width: 20em;
+    padding: 0.5em;
+    border-radius: 2em;
+} 
+
+div#profile-pic img {
+    width: 100%;
+    object-fit: cover
+}
+
+.profile-header {
+    display: flex;
+}
+
+.profile-pic {
+    flex-basis: 20%;
+    flex-grow: 1;
+    border: 1px solid black;
+}
+
+.profile-text {
+    flex-basis: 80%;
+    flex-grow: 1;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 2rem;
+    margin: 1.5rem;
+    
+}
+
+
+.profile-text h2 {
+    font-size: 2.5rem;
+    background: cornflowerblue;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    margin: 0;
+    border-radius: 1.8rem 1.8rem 0 0;
+
+}
+
+
+.prof-container-stories {
+    display: flex;
+    flex-direction: wrap;
+}
+
+.bio {
+    text-align: justify;
+    padding: 0 1rem;
+    font-size: 1rem;
+}
+
+h2.profile {
+    margin-left: 1rem;
+    margin-top: 3rem;
+}
+
+/* div.my-form {
+    max-width: 1000px;
+    margin: 0 auto;
+} */
+
+
+#hint_id_password1 {
+    visibility: hidden;
+  }
+
+a.search-card {
+    display: flex;
+    flex-direction: column;
+}  
+
+.search-text {
+    font-size: 1rem;
+    margin: 0.6em;
+    text-align: justify;
+}
+
+div.search-card {
+    border: 0;
+}
+
+div.search-card-small {
+    border: 1px solid black;
+    border-radius: 4px;
+    margin: 1em 0;
+}
+
+div.search-card-small:hover {
+    background-color: cornflowerblue;
+}
 

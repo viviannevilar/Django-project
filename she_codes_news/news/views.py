@@ -22,12 +22,15 @@ class IndexView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['latest_stories'] = NewsStory.objects.order_by('-pub_date')[:4]
         context['all_stories'] = NewsStory.objects.order_by('-pub_date')
-        #context['most_fav'] = sorted(NewsStory.objects.all(),  key=lambda m: m.fav_count)[:6]
-        cat_funny = Category.objects.get(name='Funny')
-        context['funny'] = NewsStory.objects.filter(category=cat_funny)
-        # categories = Category.objects.all()
-        # for category in categories:
-        #     context[f"{category}"] = NewsStory.objects.filter(category=category)
+        context['most_fav'] = sorted(list(NewsStory.objects.all()),  key=lambda m: m.fav_count,reverse=True)[:4]
+        
+        categories = Category.objects.all()
+        context['categories'] = []
+        for category in categories:
+            context['categories'].append( {
+                'name': category,
+                'stories': NewsStory.objects.filter(category=category)[:4]
+            })
         return context
 
 class StoryView(generic.DetailView):
@@ -117,6 +120,7 @@ class UserStoriesView(generic.ListView):
         user = get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
         return NewsStory.objects.filter(author=user).order_by('-pub_date')
 
+  
 class CategoryStoriesView(generic.DetailView):
     model = Category
     template_name = 'news/categoryStories.html' 
@@ -186,9 +190,10 @@ class SearchResultsView(generic.ListView):
     def get_queryset(self): # new
         query = self.request.GET.get('q')
         if query:
-            object_list = NewsStory.objects.filter(
-                Q(title__icontains=query) | Q(content__icontains=query) | Q(author__username__icontains=query)  
+            object_list = NewsStory.objects.filter(pub_date__isnull = False).filter(
+                Q(title__icontains=query) | Q(content__icontains=query) | Q(author__username__icontains=query) 
             )
+
             #object_list = object_list.distinct()
         else:
             object_list = None

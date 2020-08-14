@@ -7,84 +7,73 @@
 
 {% block content %}
 
-<div id="story-wrapper">
-    {% if person.first_name and person.last_name %}
-        <h2>{{ person.first_name }} {{ person.last_name }}'s Profile</h2>
-    {% else %}
-        <h2>{{ person.username }}'s Profile</h2>
-    {% endif %}
-    <a href="{% url 'news:userstories' person.username %}">All Stories</a>
 
-    {% if user.is_authenticated and user.username == person.username %}
-    <a href="{% url 'users:updateaccount' person.username %}">Edit Account</a>
-    {% endif %}
-</div>
-
-
-<div>
-    <div>
+<div class="profile-header">
+    <div id="profile-pic">
         <img src="{{ person.pic }}">
     </div>
 
-    <div>
-        {{ person.bio }}
+    <div class="profile-text">
+        {% if person.first_name and person.last_name %}
+            <h2>{{ person.first_name }} {{ person.last_name }}</h2>
+        {% else %}
+            <h2>{{ person.username }}</h2>
+        {% endif %}
+        <a href="{% url 'news:userstories' person.username %}">All Stories</a>
+
+        {% if user.is_authenticated and user.username == person.username %}
+        <a href="{% url 'users:updateaccount' person.username %}">Edit Account</a>
+        {% endif %}
+        <div class="bio">
+        {{ person.bio|linebreaks }}
+        </div>
     </div>
 </div>
 
-Stories by {{ person.username }}
-<ul>
-    {% if person.published_stories.all %}
-        {% for story in person.published_stories.all %}
-            {% if story.pub_date %}
-        <li>
-            <a href="{% url 'news:story' story.id %}">{{ story.title }}</a>
-        </li>
+<div class="prof-container-stories">
+ <h2 class="profile">Latest Stories  - <a href="{% url 'news:userstories' person.username %}"> See All {{ person.username }}'s Stories </a></h2>
+</div>
+    <div id="person-latest-stories">
+        {% if stories %}
+            {% for story in stories %}
+                {% if story.pub_date %}
+                    {% include "news/storyCardSmall.html" with story=story %}
             {% endif %}
-        {% endfor %}
-    {% else %}
-        <p>No stories are available.</p>
-    {% endif %}
-</ul>
-
+            {% endfor %}
+        {% else %}
+            <p>No stories are available.</p>
+        {% endif %}
+    </div>
 
 {% if user.is_authenticated and user.username == person.username %}
-Favourited
-<ul>
-    {% if favourited %}
-        {% for fav in favourited %}
-        <li>
-            {% comment %} {{ fav.title }} {% endcomment %}
-            <a href="{% url 'news:story' fav.id %}">{{ fav.title }}</a>
-        </li>
-        {% endfor %}
-    {% else %}
-        <p>No stories are available.</p>
-    {% endif %}
-</ul>
+<h2 class="profile">My Favourited Stories</h2>
+   <div id="person-latest-stories">
+        {% if favourited %}
+            {% for story in favourited %}
+                {% include "news/storyCardSmall.html" with story=story %}
+            {% endfor %}
+        {% else %}
+            <p>No stories have been favourited.</p>
+        {% endif %}
+    </div>
 {% endif %}
 
 
 
 {% if user.is_authenticated and user.username == person.username %}
-Drafts
-<ul>
-    {% if person.published_stories.all %}
-        {% for story in person.published_stories.all %}
-            {% if not story.pub_date %}
-        <li>
-            {{ story.title }}
-        </li>
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        <p>No stories are available.</p>
-    {% endif %}
-</ul>
+<h2 class="profile">My Drafts</h2>
+   <div id="person-latest-stories">
+       {% if person.published_stories.all %}
+            {% for story in person.published_stories.all %}
+                {% if not story.pub_date %}
+                    {% include "news/storyCardSmall.html" with story=story %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>No stories have been favourited.</p>
+        {% endif %}
+    </div>
 {% endif %}
-
-
-
-
 
 
 {% endblock %}

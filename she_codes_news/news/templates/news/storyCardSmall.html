@@ -1,0 +1,19 @@
+<div class="story-card-small">
+    <a href="{% url 'news:story' story.id %}" class="small-card">
+    <div class="likes">
+        <i class="fas fa-star"></i> <br>
+        
+        {{ story.fav_count }}
+    </div>
+
+    <div class="card-title">
+        <h4>{{ story.title }}</h4>
+        {% if story.category %}
+            {{ story.category }}
+        {% else %}
+            Uncategorised
+        {% endif %}
+         - Published on {{ story.pub_date }}
+    </div>
+    </a>
+</div>

@@ -1,0 +1,12 @@
+<div class="small-card">
+        {% if category %}
+            <a class="small-card" href="{% url 'news:cat-stories' category.name %}">
+            <i class="fas fa-hashtag"></i>
+            <p> {{ category }} </p>
+        {% else %}
+            <a class="small-card" href="{% url 'news:uncat-stories' %}">
+            <i class="fas fa-hashtag"></i>
+            <p> Uncategorised </p>
+        {% endif %}
+        </a>
+</div> 

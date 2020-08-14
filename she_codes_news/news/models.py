@@ -13,6 +13,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
         #return str(self.id) + "-" + self.name
+    class Meta:
+        verbose_name_plural = "Categories"
+
 
 class NewsStory(models.Model):
     title = models.CharField(max_length=200)
@@ -47,4 +50,4 @@ class NewsStory(models.Model):
             draft = True
         """ returns True if pub_date and edited are essentially the same """
         return draft
-   
+    

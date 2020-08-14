@@ -1,0 +1,12 @@
+<div class="author-card">
+    <a href="{% url 'news:story' story.id %}" class="small-card">
+    <div class="author-card-pic">
+        <img id="author-card-pic" src="{{ story.author.pic }}">
+    </div>
+
+    <p class="card-title">
+        {{ story.author }}
+    </p>
+    </a>
+</div>
+

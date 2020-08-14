@@ -10,25 +10,23 @@
 
     <form action="{% url 'news:search' %}" method="get">
         <input name="q" type="text" placeholder="Search...">
-        <button type=submit>Search</button>
+        <button class="btn" type=submit>Search</button>
     </form>
+
 
 
 {% if object_list %}
 <h2>Search Results</h2>
-{{ object_list | length }} results found.
-<ul>
+{{ object_list | length }} {{ object_list|length|pluralize:"result, results" }} found.
+
     {% for story in object_list %}
-    <div>
-        <a href="{% url 'news:story' story.id %}"><h4>{{ story.title }}</h4></a>
-        {{ story.author }}, 
-        {% if story.category %}{{ story.category }} {% else %} uncategorised {% endif %},
-        Published on {{ story.pub_date }}
-        <p>{{ story.content|truncatechars:100|striptags }}<p>
-    </div>
+        {% if story.pub_date %}
+                {% include "news/storyCardSearch.html" with story=story %}
+        {% endif %}
     {% endfor %}
-</ul>
 {% endif %}
+
+
 
 
 {% endblock %}

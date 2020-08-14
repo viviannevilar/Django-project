@@ -1,7 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Subrayada:wght@700&display=swap');
-
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat+Subrayada:wght@700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
 body {
-    background-color: rgb(240, 239, 239);
+    /* background-color: cornflowerblue; */
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1500px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* min-height:1300px; */
+
 }
 
 header {
@@ -9,21 +18,40 @@ header {
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #000;
+    background-color: cornflowerblue;
+    margin: 0;
+    padding: 1em;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
 }
+
+footer {
+    background-color: cornflowerblue;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 2.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.2em;
+}
+
 
 img {
-    filter: grayscale(100%);
+    /* filter: grayscale(100%); */
 }
 
-h1 {
-    font-family: 'Montserrat Subrayada', sans-serif;
+h1 {font-family: 'Russo One', sans-serif;
     text-decoration: none;
     font-size: 4rem;
     margin: 0;
 }
 
-h2 {
-   font-family: 'Montserrat Subrayada', sans-serif; 
+h2 {font-family: 'Russo One', sans-serif;
 }
 
 h3 {
@@ -41,6 +69,8 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    margin-right: 3rem;
+    font-size: 1rem;
 }
 
 a {
@@ -53,40 +83,55 @@ a, p {
     font-family: monospace;
 }
 
-.my-form {
-    /* display:flex; */
+.main-body {
+    margin: 9em auto 2em auto;
+    background-color: white;
+    padding: 0 1em 1em 1em;
+
 }
 
-form {
-    color: blue;
-    margin: 0em auto;
-    /* display: flex;
-    flex-direction: column; */
-    width: 92vw;
-    justify-content: center;
+nav a {
+    padding: 0.05em;
 }
 
+form input {
+    font-size:1.5rem;
+    width: 600px;
+}
+
+#id_content {
+    font-size:1.5rem;
+    width: 600px;
+}
+
+#id_category {
+    font-size:1.5rem;
+}
 
 form label {
-
-    color: pink;
-}
-.form-item {
-    display: flex;
-    flex-direction: column;    
-    padding: 1em;
+    font-size:2rem;
 }
 
-.form-item label {
-    font-size: 4em;
+.btn {
+    font-size: 1.5rem;
+    border-radius: 2px;
+    background-color: lightgray;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
-.form-item input,
-.form-item textarea {
-    min-width: 90%;
-    border: 2px solid #4f514f;
-    border-radius: 5px;
-    background-color: #FFF;
-    padding: 5px;
-    font-size: 4em;
+.btn:hover {
+    background-color: cornflowerblue;
+}
+
+
+
+button a {
+    font-family: Arial;
+}
+
+p.form {
+    font-size: 2rem;
+    font-family: Times;
+    margin: 0;
 }

@@ -25,8 +25,10 @@ class UserView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         person = User.objects.get(username=self.kwargs['slug'])
         posts = NewsStory.objects.filter(favourites=person.id)
+        stories = NewsStory.objects.filter(author=person).order_by('-pub_date')
         context['person'] = person
         context['favourited'] = posts
+        context['stories'] = stories
         return context
 
 class UpdateAccountView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):

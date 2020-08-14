@@ -7,17 +7,21 @@
         {% endif %}
         <div class="story-card-text">
             <h3>{{ story.title }}</h3>
+            <h4>
             {% if story.author.first_name and story.author.last_name %}
-                <h4>{{ story.author.first_name }} {{ story.author.last_name }}</h4>
+                {{ story.author.first_name }} {{ story.author.last_name }},
             {% else %}
-                <h4>{{ story.author }}</h4>
+                {{ story.author }},
             {% endif %}
+            {{ story.pub_date }}</h4>
+
+            Liked by {{story.fav_count}} {{ story.fav_count|pluralize:"person,people" }} <br>
             {% if story.category %}
             <h4>{{ story.category }}</h4>
             {% else %}
             <h4>Uncategorised</h4>
             {% endif %}
-            <h4>{{ story.pub_date }}</h4>
+            
         </div>
     </a>
 </div>
