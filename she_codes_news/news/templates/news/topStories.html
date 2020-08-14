@@ -8,13 +8,8 @@
 {% block content %}
 
     <div class="container-buttons">
-        {% if name == "Latest" %}
-            <button class='choice-button chosen'><h2>Latest Stories</h2></button> 
-            <button class='choice-button'><a href="{% url 'news:all-stories' %}?q=top"><h2>Top Stories</h2></a></button> 
-        {% else %}
-            <button class='choice-button'><a href="{% url 'news:all-stories' %}?q=latest"><h2>Latest Stories</h2></a></button> 
+            <button class='choice-button'><a href="{% url 'news:latest-stories' %}"><h2>Latest Stories</h2></a></button> 
             <button class='choice-button chosen'><h2>Top Stories</h2></button> 
-        {% endif %}
     </div>
 
     <div id="all-stories">

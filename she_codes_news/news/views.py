@@ -204,32 +204,41 @@ class SearchResultsView(generic.ListView):
         return object_list
 
 
-class AllStoriesView(generic.ListView):
+class LatestStoriesView(generic.ListView):
     model = NewsStory
-    template_name = 'news/allStories.html'
+    template_name = 'news/latestStories.html'
     context_object_name = 'stories'
     paginate_by = 9
 
-    # def get_queryset(self):
-    #     return NewsStory.objects.order_by('-pub_date')
+    def get_queryset(self):
+        return NewsStory.objects.order_by('-pub_date')
+
+
+class TopStoriesView(generic.ListView):
+    model = NewsStory
+    template_name = 'news/topStories.html'
+    context_object_name = 'stories'
+    paginate_by = 9
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
-        if query == 'latest':
-            stories = NewsStory.objects.filter(pub_date__isnull = False).order_by('-pub_date')
-        else:
-            stories = sorted(list(NewsStory.objects.all()),  key=lambda m: m.fav_count,reverse=True)
-        return stories
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        query = self.request.GET.get('q')
-        if query == 'latest':
-            context['name'] = 'Latest'
-        elif query == 'top':
-            context['name'] = 'Top'
-        return context
+        return sorted(list(NewsStory.objects.all()),  key=lambda m: m.fav_count,reverse=True)
 
+    # def get_queryset(self):
+    #     query = self.request.GET.get('q')
+    #     if query == 'latest':
+    #         stories = NewsStory.objects.filter(pub_date__isnull = False).order_by('-pub_date')
+    #     else:
+    #         stories = sorted(list(NewsStory.objects.all()),  key=lambda m: m.fav_count,reverse=True)
+    #     return stories
+    
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     query = self.request.GET.get('q')
+    #     if query == 'latest':
+    #         context['name'] = 'Latest'
+    #     elif query == 'top':
+    #         context['name'] = 'Top'
+    #     return context
 
 
 class CategoriesView(generic.ListView):
@@ -245,8 +254,8 @@ class CategoriesView(generic.ListView):
         for category in categories:
             if query == category.name:
                 context['name'] = category.name
-                context['stories'] = NewsStory.objects.filter(category=category).order_by('-pub_date')
+                context['stories'] = NewsStory.objects.filter(category=category).order_by('-pub_date')[:12]
             elif query == 'uncategorised':
                 context['name'] = 'uncategorised'
-                context['stories'] = NewsStory.objects.filter(category=None).order_by('-pub_date')
+                context['stories'] = NewsStory.objects.filter(category=None).order_by('-pub_date')[:12]
         return context

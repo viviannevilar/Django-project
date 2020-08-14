@@ -8,20 +8,14 @@
 {% block content %}
 
     <div class="container-buttons">
-        {% if name == "Latest" %}
             <button class='choice-button chosen'><h2>Latest Stories</h2></button> 
-            <button class='choice-button'><a href="{% url 'news:all-stories' %}?q=top"><h2>Top Stories</h2></a></button> 
-        {% else %}
-            <button class='choice-button'><a href="{% url 'news:all-stories' %}?q=latest"><h2>Latest Stories</h2></a></button> 
-            <button class='choice-button chosen'><h2>Top Stories</h2></button> 
-        {% endif %}
-    </div>
+            <button class='choice-button'><a href="{% url 'news:top-stories' %}"><h2>Top Stories</h2></a></button> 
+     </div>
 
     <div id="all-stories">
         {% if stories %}
             {% for story in stories %}
                 {% include "./storyCard.html" with story=story %}
-                {% comment %} {% include "./storyCard.html" with story=story position=forloop.counter %} {% endcomment %}
             {% endfor %}
         {% else %}
             <p>No stories are available.</p>
