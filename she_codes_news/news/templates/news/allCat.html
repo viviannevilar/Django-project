@@ -33,5 +33,16 @@
         {% endif %}
     </div>
 
+    <div id="button-end">
+        {% for cat in categories %}
+            {% if cat.name == name %}
+                <button class="btn"><a href="{% url 'news:cat-stories' cat.name %}">See all</a></button>
+            {% endif %}
+        {% endfor %}
+
+        {% if name == 'uncategorised' %}
+            <button class="btn"><a href="{% url 'news:uncat-stories' %}">See all</a></button>
+        {% endif %}
+    </div>
 
 {% endblock %}    

@@ -39,7 +39,6 @@
     </div>
 
     {% for category in categories %}
-
     <a href="{% url 'news:all-cat' %}?q={{ category.name }}"><h2>{{ category.name }}</h2></a>
     <div id="latest-stories">
         {% if category %}
@@ -52,6 +51,15 @@
     </div> 
     {% endfor %}
 
-
+    <a href="{% url 'news:all-cat' %}?q=uncategorised"><h2>Uncategorised</h2></a>
+    <div id="latest-stories">
+    {% if uncategorised %}
+        {% for story in uncategorised.stories %}
+            {% include "./storyCard.html" with story=story position=forloop.counter %}
+        {% endfor %}
+    {% else %}
+        <p>No stories are available.</p>
+    {% endif %}
+    </div> 
 
 {% endblock %}    

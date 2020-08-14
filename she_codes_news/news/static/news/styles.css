@@ -375,3 +375,9 @@ button.btn-draft {
     min-width: 8rem;
     font-weight: bold;
 } */
+
+
+#button-end {
+    display:flex;
+    justify-content: center;
+}

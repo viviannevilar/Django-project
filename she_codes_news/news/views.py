@@ -22,9 +22,9 @@ class IndexView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['latest_stories'] = NewsStory.objects.order_by('-pub_date')[:4]
-        context['all_stories'] = NewsStory.objects.order_by('-pub_date')
+        #context['all_stories'] = NewsStory.objects.order_by('-pub_date')
         context['most_fav'] = sorted(list(NewsStory.objects.filter(pub_date__isnull = False)),  key=lambda m: m.fav_count,reverse=True)[:4]
-        
+        context['uncategorised'] = NewsStory.objects.filter(category = None).filter(pub_date__isnull = False)[:4]
         categories = Category.objects.all()
         context['categories'] = []
         for category in categories:
