@@ -1,3 +1,4 @@
 Django==3.0.8
 pylint-django
 pylint
+django-crispy-forms
