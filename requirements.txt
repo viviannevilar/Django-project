@@ -2,3 +2,5 @@ Django==3.0.8
 pylint-django
 pylint
 django-crispy-forms
+gunicorn==20.0.4
+whitenoise==5.2.0
